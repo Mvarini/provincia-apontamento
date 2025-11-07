@@ -5,6 +5,7 @@
 @import 'admin-lte';
 @import 'overlayscrollbars/styles/overlayscrollbars.css';
 @import 'bootstrap-icons';
+@import 'flatpickr/dist/flatpickr.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -13,6 +14,5 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    'Segoe UI Symbol', 'Noto Color Emoji';
 }
-

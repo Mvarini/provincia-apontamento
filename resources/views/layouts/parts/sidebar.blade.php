@@ -1,26 +1,15 @@
-<!--begin::Sidebar-->
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-    <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
-        <!--begin::Brand Link-->
-        <a href="./index.html" class="brand-link">
-            <!--begin::Brand Image-->
+        <a href="{{ route('home.index') }}" class="brand-link">
             <img src="{{ Vite::asset('resources/images/AdminLTELogo.png') }}"
                  alt="AdminLTE Logo"
                  class="brand-image opacity-75 shadow"
             />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
-            <span class="brand-text fw-light">Apontamento</span>
-            <!--end::Brand Text-->
+            <span class="brand-text fw-light">Logster</span>
         </a>
-        <!--end::Brand Link-->
     </div>
-    <!--end::Sidebar Brand-->
-    <!--begin::Sidebar Wrapper-->
     <div class="sidebar-wrapper">
         <nav class="mt-2">
-            <!--begin::Sidebar Menu-->
             <ul
                 class="nav sidebar-menu flex-column"
                 data-lte-toggle="treeview"
@@ -30,16 +19,33 @@
                 id="navigation"
             >
                 <li class="nav-item">
-                    <a href="./generate/theme.html" class="nav-link">
-                        <i class="nav-icon bi bi-palette"></i>
-                        <p>Dashboard</p>
+                    <a href="{{ route('home.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar === 'home'])>
+                        <i class="nav-icon bi bi-house-fill"></i>
+                        <p>Home</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('product.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar === 'produtos'])>
                         <i class="nav-icon bi bi-box-seam-fill"></i>
                         <p>
                             Produtos
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('machine.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar === 'máquinas'])>
+                        <i class="nav-icon bi bi-nut-fill"></i>
+                        <p>
+                            Máquinas
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('employee.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar === 'colaboradores'])>
+                        <i class="nav-icon bi bi-person-vcard-fill"></i>
+                        <p>
+                            Colaboradores
                         </p>
                     </a>
                 </li>
@@ -53,32 +59,31 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-plug-fill"></i>
+                        <i class="nav-icon bi bi-shield-fill-check"></i>
                         <p>
-                            Máquinas
+                            EPIs
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">AUTENTICAÇÃO</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-wrench-adjustable"></i>
+                    <a href="{{ route('user.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar === 'users'])>
+                        <i class="nav-icon bi bi-person"></i>
                         <p>
-                            Operadores
+                            Usuários
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">PERMISSÃO</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-table"></i>
+                        <i class="nav-icon bi bi-gear-wide-connected"></i>
                         <p>
-                            Tables
+                            Papéis
                         </p>
                     </a>
                 </li>
             </ul>
-            <!--end::Sidebar Menu-->
         </nav>
     </div>
-    <!--end::Sidebar Wrapper-->
 </aside>
-<!--end::Sidebar-->

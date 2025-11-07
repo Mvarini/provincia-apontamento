@@ -3,7 +3,12 @@ import.meta.glob([
     '../fonts/**',
 ]);
 
+
 import 'bootstrap';
 import 'admin-lte';
-import './overlayscrollbars.js'
-
+import './overlayscrollbars.js';
+import './sweet.alert.delete.js';
+import './importsweetalert.js';
+import './importjquery.js';
+import './importflatpickr.js';
+import './importjquerymask.js';
