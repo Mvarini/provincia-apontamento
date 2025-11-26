@@ -105,7 +105,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('ppe-movements.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar == 'ppeMovements'])>
                                     <i class="nav-icon bi bi-folder-fill"></i>
                                     <p>
                                         Movimentação

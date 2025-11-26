@@ -97,7 +97,7 @@
         Route::delete('/ppes/destroy/{ppe}', [PpeController::class, 'destroy'])->name('ppe.destroy')->middleware('permission:ppe.destroy');
 
         // EPI MOVIMENTATION
-        Route::get('/ppes/movements', [PpeMovementController::class, 'index'])->name('ppe.movements')->middleware('permission:ppe-movements.index');
+        Route::get('/ppes/movements', [PpeMovementController::class, 'index'])->name('ppe-movements.index')->middleware('permission:ppe-movements.index');
         Route::get('/ppes/movements/create', [PpeMovementController::class, 'create'])->name('ppe-movements.create')->middleware('permission:ppe-movements.create');
         Route::post('/ppes/movements/store', [PpeMovementController::class, 'store'])->name('ppe-movements.store')->middleware('permission:ppe-movements.create');
         Route::get('/ppes/movements/edit/{ppeMovement}', [PpeMovementController::class, 'edit'])->name('ppe-movements.edit')->middleware('permission:ppe-movements.edit');
