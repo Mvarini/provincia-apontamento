@@ -9,6 +9,7 @@
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Str;
+    use Spatie\Permission\Models\Role;
 
 
     class UserController extends Controller
@@ -25,13 +26,18 @@
 
         public function create()
         {
+            // Recuperar todas as permissões do banco de dados
+            $roles = Role::pluck('name')->all();
+
             return view('users.create', [
-                'sidebar' => 'users'
+                'sidebar' => 'users',
+                'roles' => $roles,
             ]);
         }
 
         public function store(UserCreateRequest $request)
         {
+
             // Validar o formulário
             $request->validated();
 
@@ -44,6 +50,9 @@
                     'email' => Str::lower($request->email),
                     'password' => $request->password,
                 ]);
+
+                // Atribuir o papael da request ao usuário
+                $user->assignRole($request->role);
 
                 // Salvar o log
                 Log::info('usuário cadastrado', ['id' => $user->id, 'action_user_id' => Auth::id()]);
@@ -64,9 +73,17 @@
 
         public function edit(User $user)
         {
+            // Recuperar todos os papéis do banco de dados
+            $roles = Role::pluck('name')->all();
+
+            // Recuperar o papel do usuario
+            $userRoles = $user->roles()->pluck('name')->first();
+
             return view('users.edit', [
                 'user' => $user,
-                'sidebar' => 'users'
+                'sidebar' => 'users',
+                'roles' => $roles,
+                'userRoles' => $userRoles
             ]);
         }
 
@@ -80,11 +97,17 @@
                 'password' => $request->password ?? $user->password,
             ]);
 
+            // Sincronizar o papel do usuário
+            $user->syncRoles($request->role);
+
             return redirect()->route('user.index')->with('success', 'Usuário atualizado com sucesso!');
         }
 
         public function destroy(User $user)
         {
+            // Remove todos os papéis do usuário
+            $user->syncRoles([]);
+            
             $user->delete();
 
             Log::info('usuário excluído', ['id' => $user->id, 'action_user_id' => Auth::id()]);

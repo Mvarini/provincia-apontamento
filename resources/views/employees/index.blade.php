@@ -1,20 +1,26 @@
 @extends('layouts.master.default')
 @section('page-title', 'Colaboradores')
 @section('page-actions')
-    <a href="{{ route('employee.create') }}" class="btn btn-primary btn-sm">Adicionar</a>
+    @can('employee.create')
+        <a href="{{ route('employee.create') }}" class="btn btn-primary btn-sm">Adicionar</a>
+    @endcan
 @endsection
 @section('content')
     <x-alert/>
 
     <div class="card">
         <div class="card-body shadow-sm">
-            <table class="table table-hover table-sm">
+            <table class="table table-hover table-sm table-sm-text">
                 <thead>
                 <tr>
                     <th class="w-30">Nome</th>
-                    <th class="w-25 d-none d-md-table-cell">Cargo</th>
+                    <th class="w-25 d-none d-md-table-cell">Setor</th>
                     <th class="w-25 d-none d-md-table-cell">Função</th>
-                    <th class="w-10 text-end">Ações</th>
+                    <th class="w-10 text-end">
+                        @if(auth()->user()->can('employee.edit') || auth()->user()->can('employee.destroy'))
+                            Ações
+                        @endif
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,27 +28,36 @@
                     <tr>
                         <td class="w-30 align-middle">{{ $employee->name }}</td>
                         <td class="w-25 d-none d-md-table-cell align-middle">{{ $employee->department }}</td>
-                        <td class="w-25 d-none d-mdtable-cell align-middle">{{ $employee->job_title }}</td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark border-0" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item"
-                                           href="{{ route('employee.edit', $employee->id) }}">Editar</a>
-                                    </li>
-                                    <li>
-                                        <form id="formDelete{{ $employee->id }}"
-                                              action="{{ route('employee.destroy', $employee->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="dropdown-item btnDelete" data-delete-id="{{ $employee->id }}"
-                                                    type="submit">Excluir
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                        <td class="w-25 d-none d-md-table-cell align-middle">{{ $employee->job_title }}</td>
+                        <td class="w-10 text-end align-middle">
+                            @if(auth()->user()->can('employee.edit') || auth()->user()->can('employee.destroy'))
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-dark border-0" type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                                    <ul class="dropdown-menu">
+                                        @can('employee.edit')
+                                            <li><a class="dropdown-item"
+                                                   href="{{ route('employee.edit', $employee->id) }}">Editar</a>
+                                            </li>
+                                        @endcan
+                                        @can('employee.destroy')
+                                            <li>
+                                                <form id="formDelete{{ $employee->id }}"
+                                                      action="{{ route('employee.destroy', $employee->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item btnDelete"
+                                                            data-delete-id="{{ $employee->id }}"
+                                                            type="submit">Excluir
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endcan
+                                    </ul>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 @empty

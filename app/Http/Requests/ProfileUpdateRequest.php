@@ -26,7 +26,7 @@
                 'birthday' => 'nullable|date_format:d/m/Y',
                 'phone' => 'nullable|max:15',
                 'gender' => 'nullable',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
             ];
         }
 
@@ -41,7 +41,7 @@
                 'image' => [
                     'image' => 'Arquivo deve ser uma imagem',
                     'mimes' => 'Arquivo deve ser do tipo jpeg, png ou jpg',
-                    'max' => 'Máximo de 2MB'
+                    'max' => 'Máximo de :max KB'
                 ],
             ];
         }

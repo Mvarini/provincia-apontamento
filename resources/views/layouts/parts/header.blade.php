@@ -138,14 +138,14 @@
             <!--end::Notifications Dropdown Menu-->
             <!--begin::Fullscreen Toggle-->
             <li class="nav-item">
-                {{-- <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                     <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                     <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
-                 </a>--}}
+                {{--                <a class="nav-link" href="#" data-lte-toggle="fullscreen">--}}
+                {{--                    <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>--}}
+                {{--                    <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>--}}
+                {{--                </a>--}}
             </li>
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    @if(Auth::user()->profile->image)
+                    @if(Auth::user()->profile?->image)
                         <img src="{{ Storage::url(Auth::user()->profile->image) }}"
                              class="user-image rounded-circle shadow-sm"
                              alt="{{ explode(' ', trim(Auth::user()->name))[0] }}"
@@ -156,10 +156,6 @@
                              alt="{{ explode(' ', trim(Auth::user()->name))[0] }}"
                         />
                     @endif
-                    {{--                    <img src="{{ Vite::asset('resources/images/user.png') }}"--}}
-                    {{--                         class="user-image rounded-circle shadow-sm"--}}
-                    {{--                         alt="User Image"--}}
-                    {{--                    />--}}
                     <span class="d-none d-md-inline">
                         @if(Auth::check())
                             {{ explode(' ', trim(Auth::user()->name))[0] }}
@@ -167,18 +163,18 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu w-auto dropdown-menu-end rounded-1">
-                    <li><small><a class="dropdown-item"
-                                  href="{{ route('profile.create', Auth::id()) }}">perfil</a></small></li>
+                    @can('profile.create')
+                        <li><small><a class="dropdown-item" href="{{ route('profile.create', Auth::id()) }}">Perfil</a></small>
+                        </li>
+                    @endcan
                     <li>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             @method('POST')
-                            {{--                            <small><a class="dropdown-item " href="{{ route('logout') }}">Sair</a></small>--}}
                             <small>
                                 <button type="submit" class="dropdown-item">Sair</button>
                             </small>
                         </form>
-                        {{--                        <small><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></small>--}}
                     </li>
 
                 </ul>

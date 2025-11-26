@@ -38,10 +38,10 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="department" class="form-label">Cargo <span class="text-danger">*</span></label>
+                    <label for="department" class="form-label">Setor <span class="text-danger">*</span></label>
                     <input type="text"
                            name="department"
-                           placeholder="Cargo"
+                           placeholder="Setor"
                            value="{{ old('department', $employee->department) }}"
                            class="form-control @error('department') is-invalid @enderror"
                     />

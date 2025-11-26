@@ -12,4 +12,6 @@ $(document).ready(function () {
     $('.mixed').mask('AAA 000-S0S');
     $('.cpf').mask('000.000.000-00', {reverse: true});
     $('.money').mask('000.000.000.000.000,00', {reverse: true});
+    $('.second').mask('000,00', {reverse: true});
+    $('.number').mask('000.000.000.000.000', {reverse: true});
 });

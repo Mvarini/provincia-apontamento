@@ -27,6 +27,7 @@
                 'name' => 'required|max:100',
                 'email' => 'required|email|max:100|unique:users,email,' . ($userId ? $userId->id : null),
                 'password' => 'exclude_if:password,null|min:8|confirmed',
+                'role' => 'required'
             ];
         }
 
@@ -46,6 +47,7 @@
                     'min' => 'Mínimo de 8 caracteres',
                     'confirmed' => 'As senhas não conferem'
                 ],
+                'role.required' => 'O campo papel é obrigatório'
             ];
         }
     }

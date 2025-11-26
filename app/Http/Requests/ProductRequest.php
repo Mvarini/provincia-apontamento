@@ -23,6 +23,7 @@
         {
             return [
                 'name' => 'required|max:100',
+                'cadtecture' => 'nullable|file|mimes:pdf|max:2048'
             ];
         }
 
@@ -32,6 +33,10 @@
                 'name' => [
                     'required' => 'Campo obrigatório',
                     'max' => 'Máximo de :max caracteres'
+                ],
+                'cadtecture' => [
+                    'mimes' => 'Arquivo deve ser do tipo pdf',
+                    'max' => 'Excedeu o limite de :max MB'
                 ],
             ];
         }

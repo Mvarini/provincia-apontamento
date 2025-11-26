@@ -3,10 +3,17 @@
     namespace App\Models;
 
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Relations\HasMany;
 
     class Machine extends Model
     {
         protected $table = 'machines';
 
         protected $fillable = ['name'];
+
+
+        public function tasks(): hasMany
+        {
+            return $this->hasMany(Task::class);
+        }
     }

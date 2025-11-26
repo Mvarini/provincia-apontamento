@@ -3,10 +3,16 @@
     namespace App\Models;
 
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Relations\HasMany;
 
     class Product extends Model
     {
         protected $table = 'products';
 
-        protected $fillable = ['name'];
+        protected $fillable = ['name', 'cadtec'];
+
+        public function tasks(): hasMany
+        {
+            return $this->hasMany(Task::class);
+        }
     }

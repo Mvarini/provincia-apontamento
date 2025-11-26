@@ -19,7 +19,8 @@
 
             return view('machines.index', [
                 'machines' => $machines,
-                'sidebar' => 'máquinas'
+                'sidebar' => 'máquinas',
+                'menuOpen' => 'menuOpen'
             ]);
         }
 
@@ -29,7 +30,8 @@
         public function create()
         {
             return view('machines.create', [
-                'sidebar' => 'máquinas'
+                'sidebar' => 'máquinas',
+                'menuOpen' => 'menuOpen'
             ]);
         }
 
@@ -74,7 +76,8 @@
         {
             return view('machines.edit', [
                 'machine' => $machine,
-                'sidebar' => 'máquinas'
+                'sidebar' => 'máquinas',
+                'menuOpen' => 'menuOpen'
             ]);
         }
 

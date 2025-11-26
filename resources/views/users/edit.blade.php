@@ -39,7 +39,31 @@
                     @enderror
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <label for="role" class="form-label">Papel <span class="text-danger">*</span></label>
+                    <select name="role"
+                            class="form-select @error('role') is-invalid @enderror">
+                        <option value="">Selecione</option>
+                        @foreach($roles as $role)
+                            @if($role != "Super Admin")
+                                <option
+                                    {{ old('role', $userRoles) == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>
+                            @else
+                                @if(auth()->user()->hasRole("Super Admin"))
+                                    <option
+                                        {{ old('role', $userRoles) == $role   ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>
+                                @endif
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('role')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4">
                     <label for="password" class="form-label">Senha</label>
                     <input
                         type="password"
@@ -52,7 +76,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="password_confirmation" class="form-label">Confirmar senha</label>
                     <input
                         type="password"

@@ -9,7 +9,7 @@
                 @method('PUT')
 
                 <div class="col-md-4">
-                    <label for="nickname" class="form-label mb-1">Apelido <span class="text-danger">*</span></label>
+                    <label for="nickname" class="form-label mb-1">Apelido</label>
                     <input
                         type="text"
                         name="nickname"
@@ -63,7 +63,7 @@
                         <option value="">Selecione</option>
                         @foreach ($genders as $gender)
                             <option
-                                {{ old('gender', $gender) == $user->profile?->gender ? "selected" : "" }} value="{{ $gender }}">{{ $gender }}</option>
+                                {{ old('gender', $gender) === $user->profile?->gender ? "selected" : "" }} value="{{ $gender }}">{{ $gender }}</option>
                         @endforeach
                     </select>
                     @error('gender')

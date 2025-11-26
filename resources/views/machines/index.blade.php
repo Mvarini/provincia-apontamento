@@ -1,18 +1,24 @@
 @extends('layouts.master.default')
 @section('page-title', 'Máquinas')
 @section('page-actions')
-    <a href="{{ route('machine.create') }}" class="btn btn-primary btn-sm">Adicionar</a>
+    @can('machine.create')
+        <a href="{{ route('machine.create') }}" class="btn btn-primary btn-sm">Adicionar</a>
+    @endcan
 @endsection
 @section('content')
     <x-alert/>
 
     <div class="card">
         <div class="card-body shadow-sm">
-            <table class="table table-hover table-sm">
+            <table class="table table-hover table-sm table-sm-text">
                 <thead>
                 <tr>
                     <th>Nome</th>
-                    <th class="w-10 text-end">Ações</th>
+                    <th class="w-10 text-end">
+                        @if(auth()->user()->can('machine.edit') || auth()->user()->can('machine.destroy'))
+                            Ações
+                        @endif
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,25 +26,35 @@
                     <tr>
                         <td class="align-middle">{{ $machine->name }}</td>
                         <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark border-0" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item"
-                                           href="{{ route( 'machine.edit', $machine->id) }}">Editar</a>
-                                    </li>
-                                    <li>
-                                        <form id="formDelete{{ $machine->id }}"
-                                              action="{{ route('machine.destroy', $machine->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="dropdown-item btnDelete" data-delete-id="{{ $machine->id }}"
-                                                    type="submit">Excluir
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                            @if(auth()->user()->can('machine.edit') || auth()->user()->can('machine.destroy'))
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-dark border-0" type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                                    <ul class="dropdown-menu">
+
+                                        @can('machine.edit')
+                                            <li><a class="dropdown-item"
+                                                   href="{{ route( 'machine.edit', $machine->id) }}">Editar</a>
+                                            </li>
+                                        @endcan
+                                        @can('machine.destroy')
+                                            <li>
+                                                <form id="formDelete{{ $machine->id }}"
+                                                      action="{{ route('machine.destroy', $machine->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item btnDelete"
+                                                            data-delete-id="{{ $machine->id }}"
+                                                            type="submit">Excluir
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endcan
+                                    </ul>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -50,7 +66,6 @@
                         </td>
                     </tr>
                 @endforelse
-
                 </tbody>
             </table>
             <div class="mt-3">

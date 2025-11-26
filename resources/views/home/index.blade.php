@@ -103,17 +103,8 @@
 
         <div class="container mt-4">
             <div class="row g-3 justify-content-center">
-
                 <div class="col-6 col-md-3">
-                    <a href="{{ route('home.index') }}"
-                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
-                        <i class="bi bi-house-fill fs-3 mb-2"></i>
-                        <span>Home</span>
-                    </a>
-                </div>
-
-                <div class="col-6 col-md-3">
-                    <a href="/perfil"
+                    <a href="{{ route('product.index') }}"
                        class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi bi-box-seam-fill fs-3 mb-2"></i>
                         <span>Produtos</span>
@@ -121,7 +112,7 @@
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a href="/configuracoes"
+                    <a href="{{ route('machine.index') }}"
                        class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-nut-fill fs-3 mb-2"></i>
                         <span>Máquinas</span>
@@ -129,21 +120,32 @@
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a href="/relatorios" class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                    <a href="{{ route('machinebreakdown.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                        <i class="bi bi-exclamation-triangle-fill fs-3 mb-2"></i>
+                        <span>Paradas</span>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <a href="{{ route('employee.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-person-vcard-fill fs-3 mb-2"></i>
                         <span>Colaboradores</span>
                     </a>
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a href="/relatorios" class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                    <a href="{{ route('task.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-clipboard-fill fs-3 mb-2"></i>
                         <span>Apontamentos</span>
                     </a>
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a href="/relatorios" class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                    <a href="{{ route('ppe.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-shield-fill-check fs-3 mb-2"></i>
                         <span>EPIs</span>
                     </a>
@@ -158,7 +160,8 @@
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a href="/relatorios" class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                    <a href="{{ route('role.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-gear-wide-connected fs-3 mb-2"></i>
                         <span>Pápeis</span>
                     </a>
