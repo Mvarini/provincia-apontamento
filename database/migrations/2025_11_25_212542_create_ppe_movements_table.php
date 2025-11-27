@@ -14,7 +14,7 @@
                 $table->id();
                 $table->foreignId('ppe_id')->constrained()->cascadeOnDelete();
                 $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
-                $table->string('size');
+                $table->string('size')->nullable();
                 $table->integer('quantity');
                 $table->date('date');
                 $table->timestamps();

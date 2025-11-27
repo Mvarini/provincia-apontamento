@@ -46,7 +46,7 @@
                         <option value="">Selecione a máquina</option>
                         @foreach($machines as $machine)
                             <option
-                                {{ $machine->id == $task->machine_id ? "selected" : "" }} value="{{ $machine->id }}">{{ $machine->name }}</option>
+                                {{ old('machine_id', $task->machine_id) == $machine->id ? "selected" : "" }} value="{{ $machine->id }}">{{ $machine->name }}</option>
                         @endforeach
                     </select>
                     @error('machine_id')
@@ -62,7 +62,7 @@
                         <option value="">Selecione o produto</option>
                         @foreach($products as $product)
                             <option
-                                {{ $product->id == $task->product_id ? "selected" : "" }} value="{{ $product->id }}">{{ $product->name }}</option>
+                                {{ old('product_id', $task->product_id) == $product->id ? "selected" : "" }} value="{{ $product->id }}">{{ $product->name }}</option>
                         @endforeach
                     </select>
                     @error('product_id')
@@ -78,7 +78,7 @@
                         <option value="">Selecione o colaborador</option>
                         @foreach($employees as $employee)
                             <option
-                                {{ $employee->id == $task->employee_id ? "selected" : "" }} value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                {{ old('employee_id', $task->employee_id) == $employee->id ? "selected" : "" }} value="{{ $employee->id }}">{{ $employee->name }}</option>
                         @endforeach
                     </select>
                     @error('employee_id')
