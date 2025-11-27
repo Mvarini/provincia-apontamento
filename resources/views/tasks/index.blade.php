@@ -22,7 +22,7 @@
                                class="form-control "/>
                     </div>
 
-                    <div class="col-12 col-md-3">
+                    <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
                             <input type="text"
@@ -87,7 +87,7 @@
                         <td class="text-center align-middle">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $task->date)->format('d/m/Y') }}</td>
                         <td class="text-center align-middle">{{ $task->batch_number }}</td>
                         <td class="text-center align-middle">{{ $task->machine->name }} </td>
-                        <td class="text-center align-middle d-none d-md-table-cell">{{ $task->product->name }}</td>
+                        <td class="text-center align-middle d-none d-md-table-cell">{{ $task->product?->name }}</td>
                         <td class="text-center d-none d-md-table-cell align-middle">{{ $task->piece_second }}</td>
                         <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->amount_carried }}</td>
                         <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity }}</td>

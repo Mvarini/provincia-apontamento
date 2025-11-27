@@ -8,7 +8,6 @@
     class Machine extends Model
     {
         protected $table = 'machines';
-
         protected $fillable = ['name'];
 
 

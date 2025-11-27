@@ -7,22 +7,31 @@
     use App\Models\Ppe;
     use App\Models\PpeMovement;
     use Carbon\Carbon;
+    use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
+    use Spatie\Browsershot\Browsershot;
 
     class PpeMovementController extends Controller
     {
         /**
          * Display a listing of the resource.
          */
-        public function index()
+        public function index(Request $request)
         {
-            $ppeMovements = PpeMovement::orderBy('date', 'desc')->paginate(10);
+//            $ppeMovements = PpeMovement::orderBy('date', 'desc')->paginate(10);
+
+            $ppeMovements = PpeMovement::when($request->filled('date'), function ($query) use ($request) {
+                $query->where('date', '=', Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
+            })
+                ->orderBy('date', 'desc')->paginate(10)
+                ->withQueryString();
 
             return view('ppemovements.index', [
                 'sidebar' => 'ppeMovements',
                 'ppeMovements' => $ppeMovements,
-                'menuOpen' => 'menuOpenEpi'
+                'menuOpen' => 'menuOpenEpi',
+                'date' => $request->date
             ]);
         }
 
@@ -149,5 +158,64 @@
 
                 return back()->with('error', 'Movimentação de EPI não deletada!');
             }
+        }
+
+        public function reportPpe(Request $request)
+        {
+
+            $ppeMovements = PpeMovement::when($request->filled('date'), function ($query) use ($request) {
+                $query->where('date', '=', Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
+            })
+                ->orderBy('date', 'desc')
+                ->orderBy('employee_id', 'asc')
+                ->get();
+
+            $ppeMovements->load('employee', 'ppe');
+
+            // Totais por EPI
+            $totais = $ppeMovements->groupBy(function ($item) {
+                return $item->ppe->name . ' - ' . ($item->size ?? 'N/A');
+            })->map(function ($group) {
+                return $group->sum('quantity');
+            });
+
+
+            $html = view('ppemovements.reports.report', [
+                'sidebar' => 'ppeMovements',
+                'ppeMovements' => $ppeMovements,
+                'menuOpen' => 'menuOpenEpi',
+                'totais' => $totais,
+            ]);
+
+//            $pdf = Browsershot::html($html)
+//                ->format('A4')
+//                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+//                ->margins(1, 1, 1, 1)
+//                ->waitUntilNetworkIdle()
+//                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+//                ->showBrowserHeaderAndFooter()
+//                ->headerHtml('')
+//                ->footerHtml(view('ppemovements.reports.footer')->render())
+//                ->pdf();
+
+            // Desabilita header
+            $pdf = Browsershot::html($html)
+                ->format('A4')
+                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+                ->margins(1, 1, 1, 1)
+                ->waitUntilNetworkIdle()
+                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+                ->setOption('displayHeaderFooter', true) // habilita header/footer
+                ->setOption('headerTemplate', '<span></span>') // header vazio
+                ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
+                ->pdf();
+
+
+            return response($pdf)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="movimentação_epi_' . $request->date . '.pdf"');
+//            inline: visualiza o pdf
+//            attachment: fazer o download direto
+
         }
     }

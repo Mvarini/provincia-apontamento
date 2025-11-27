@@ -103,6 +103,7 @@
         Route::get('/ppes/movements/edit/{ppeMovement}', [PpeMovementController::class, 'edit'])->name('ppe-movements.edit')->middleware('permission:ppe-movements.edit');
         Route::put('/ppes/movements/update/{ppeMovement}', [PpeMovementController::class, 'update'])->name('ppe-movements.update')->middleware('permission:ppe-movements.edit');
         Route::delete('/ppes/movements/destroy/{ppeMovement}', [PpeMovementController::class, 'destroy'])->name('ppe-movements.destroy')->middleware('permission:ppe-movements.destroy');;
+        Route::get('/ppes/movements/report', [PpeMovementController::class, 'reportPpe'])->name('ppe-movements.report')->middleware('permission:ppe-movements.report');
 
 
         // ROLE

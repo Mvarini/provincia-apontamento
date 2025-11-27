@@ -7,6 +7,54 @@
     <x-alert/>
     <div class="card">
         <div class="card-body shadow-sm">
+
+            <div class="mb-4">
+                <form action="{{ route('ppe-movements.index') }}" method="GET" class="row g-3">
+                    @csrf
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+                            <input type="text"
+                                   class="form-control datepicker"
+                                   name="date"
+                                   value="{{ $date }}"
+                                   placeholder="Data da movimentação"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Ações
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button class="dropdown-item" type="submit">Pesquisar</button>
+                                </li>
+                                <li>
+                                    <a href="{{ route('ppe-movements.index') }}" class="dropdown-item" type="button">Limpar</a>
+                                </li>
+                                @can('task.report-task')
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('ppes/movements/report?' . request()->getQueryString()) }}"
+                                           class="dropdown-item">Download relatório</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
             <table class="table table-sm table-hover table-sm-text">
                 <thead>
                 <tr>

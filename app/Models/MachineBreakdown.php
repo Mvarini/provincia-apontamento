@@ -7,7 +7,6 @@
     class MachineBreakdown extends Model
     {
         protected $table = 'machine_breakdowns';
-
         protected $fillable = ['name'];
 
     }

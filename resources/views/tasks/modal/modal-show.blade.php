@@ -20,7 +20,7 @@
                             <dd class="col-md-9">{{ $task->machine->name }}</dd>
 
                             <dt class="col-md-3">Produto:</dt>
-                            <dd class="col-md-9">{{ $task->product->name }}</dd>
+                            <dd class="col-md-9">{{ $task->product?->name }}</dd>
 
                             <dt class="col-md-3">Operador:</dt>
                             <dd class="col-md-9">{{ $task->employee->name }}</dd>

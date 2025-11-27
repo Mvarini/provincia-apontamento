@@ -16,6 +16,7 @@
                 $table->foreignId('machine_breakdown_id')->constrained()->cascadeOnDelete();
                 $table->integer('duration');
                 $table->timestamps();
+                $table->softDeletes();
             });
         }
 

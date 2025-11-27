@@ -8,7 +8,6 @@
     class Product extends Model
     {
         protected $table = 'products';
-
         protected $fillable = ['name', 'cadtec'];
 
         public function tasks(): hasMany
