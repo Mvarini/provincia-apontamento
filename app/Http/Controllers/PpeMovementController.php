@@ -187,6 +187,7 @@
                 'totais' => $totais,
             ]);
 
+            // Sem desabilitar o header
 //            $pdf = Browsershot::html($html)
 //                ->format('A4')
 //                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
@@ -211,11 +212,19 @@
                 ->pdf();
 
 
-            return response($pdf)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'inline; filename="movimentação_epi_' . $request->date . '.pdf"');
+            if ($request->date) {
+                return response($pdf)
+                    ->header('Content-Type', 'application/pdf')
+                    ->header('Content-Disposition', 'attachment; filename="movimentação_epi_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
+            }else{
+                return response($pdf)
+                    ->header('Content-Type', 'application/pdf')
+                    ->header('Content-Disposition', 'attachment; filename="movimentação_epi'. '.pdf"');
+//            inline: visualiza o pdf
+//            attachment: fazer o download direto
+            }
 
         }
     }
