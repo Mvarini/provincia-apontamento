@@ -203,6 +203,8 @@
             $pdf = Browsershot::html($html)
                 ->format('A4')
                 ->setChromePath('/usr/bin/google-chrome')
+                ->setNodeBinary('/root/.nvm/versions/node/v24.11.1/bin/node')
+                ->setNpmBinary('/root/.nvm/versions/node/v24.11.1/bin/npm')
                 //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                 ->margins(1, 1, 1, 1)
                 ->waitUntilNetworkIdle()
