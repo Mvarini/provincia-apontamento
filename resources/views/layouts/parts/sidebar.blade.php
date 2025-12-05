@@ -104,6 +104,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('ppe-movements.index')
                             <li class="nav-item">
                                 <a href="{{ route('ppe-movements.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar == 'ppeMovements'])>
                                     <i class="nav-icon bi bi-folder-fill"></i>
@@ -112,7 +113,7 @@
                                     </p>
                                 </a>
                             </li>
-
+                            @endcan
                             @can('ppe.index')
                                 <li class="nav-item">
                                     <a href="{{ route('ppe.index') }}" @class(['nav-link', 'active' => isset($sidebar) && $sidebar == 'epi'])>
