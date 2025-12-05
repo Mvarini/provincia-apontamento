@@ -202,7 +202,8 @@
             // Desabilita header
             $pdf = Browsershot::html($html)
                 ->format('A4')
-                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+                ->setChromePath('/usr/bin/google-chrome')
+                //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                 ->margins(1, 1, 1, 1)
                 ->waitUntilNetworkIdle()
                 ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
