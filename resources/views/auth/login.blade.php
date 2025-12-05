@@ -7,7 +7,7 @@
             <div class="card-body login-card-body rounded-3 shadow-sm pt-2">
 
                 <div class="login-logo mb-0 mt-1">
-                    <a href="{{ route('login') }}"><b>Logster deploy</b></a>
+                    <a href="{{ route('login') }}"><b>Logster</b></a>
                 </div>
                 <p class="login-box-msg pt-2">Bem-vindo(a)</p>
 
