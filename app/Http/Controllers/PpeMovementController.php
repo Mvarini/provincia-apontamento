@@ -179,7 +179,6 @@
                 return $group->sum('quantity');
             });
 
-
             $html = view('ppemovements.reports.report', [
                   'sidebar' => 'ppeMovements',
                   'ppeMovements' => $ppeMovements,
