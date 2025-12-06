@@ -191,8 +191,6 @@
                   ->format('A4')
                   ->setChromePath('/usr/bin/google-chrome')
                   ->setIncludePath('$PATH:/usr/local/bin')
-                 // ->setNodeBinary('/usr/bin/node')
-                 // ->setNpmBinary('/usr/bin/npm')
                   //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                   ->margins(1, 1, 1, 1)
                   ->waitUntilNetworkIdle()

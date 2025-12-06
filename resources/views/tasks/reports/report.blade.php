@@ -86,7 +86,7 @@
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
-                                    <span class="fw-bold label-col-dados">Percentual de produtividade:</span>
+                                    <span class="fw-bold label-col-dados">% produtividade:</span>
                                     <span>{{ $task->productivity}}%</span>
                                 </div>
 
