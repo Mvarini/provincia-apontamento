@@ -11,6 +11,7 @@
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
     use Spatie\Browsershot\Browsershot;
+    use Spatie\LaravelPdf\Facades\Pdf;
 
     class PpeMovementController extends Controller
     {
@@ -180,12 +181,16 @@
             });
 
 
-            $html = view('ppemovements.reports.report', [
+           return PDF::view('ppemovements.reports.report', [
                 'sidebar' => 'ppeMovements',
                 'ppeMovements' => $ppeMovements,
                 'menuOpen' => 'menuOpenEpi',
                 'totais' => $totais,
-            ]);
+            ])
+                ->format('a4')
+                ->name('relatorio.pdf');
+
+
 
             // Sem desabilitar o header
 //            $pdf = Browsershot::html($html)
@@ -200,22 +205,9 @@
 //                ->pdf();
 
             // Desabilita header
-            $pdf = Browsershot::html($html)
+            /*$pdf = Browsershot::html($html)
                 ->format('A4')
                 ->setChromePath('/usr/bin/google-chrome')
-                ->setNodeBinary('/usr/bin/node')            // caminho do Node
-                ->setNpmBinary('/usr/bin/npm')
-                ->setOption('args', [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-crash-reporter',
-                    '--disable-extensions',
-                    '--disable-gpu',
-                    '--single-process'
-                ])
-                ->setOption('userDataDir', '/tmp/chrome-profile') // diretório temporário seguro
-                ->format('A4')
                 //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                 ->margins(1, 1, 1, 1)
                 ->waitUntilNetworkIdle()
@@ -223,10 +215,12 @@
                 ->setOption('displayHeaderFooter', true) // habilita header/footer
                 ->setOption('headerTemplate', '<span></span>') // header vazio
                 ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
-                ->pdf();
+                ->pdf();*/
 
 
-            if ($request->date) {
+
+
+           /* if ($request->date) {
                 return response($pdf)
                     ->header('Content-Type', 'application/pdf')
                     ->header('Content-Disposition', 'attachment; filename="movimentação_epi_' . $request->date . '.pdf"');
@@ -238,7 +232,7 @@
                     ->header('Content-Disposition', 'attachment; filename="movimentação_epi'. '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
-            }
+            }*/
 
         }
     }
