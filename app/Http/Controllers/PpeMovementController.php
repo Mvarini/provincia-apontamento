@@ -205,6 +205,7 @@
                 ->setChromePath('/usr/bin/google-chrome')
                 ->setNodeBinary('/usr/bin/node')            // caminho do Node
                 ->setNpmBinary('/usr/bin/npm')
+                ->setOption('userDataDir', '/tmp/chrome') // diretório temporário
                 //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                 ->margins(1, 1, 1, 1)
                 ->waitUntilNetworkIdle()
