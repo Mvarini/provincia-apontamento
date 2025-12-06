@@ -11,7 +11,6 @@
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
     use Spatie\Browsershot\Browsershot;
-    use Spatie\LaravelPdf\Facades\Pdf;
 
     class PpeMovementController extends Controller
     {
@@ -188,25 +187,13 @@
                   'totais' => $totais,
               ]);
 
-
-              // Sem desabilitar o header
-  //            $pdf = Browsershot::html($html)
-  //                ->format('A4')
-  //                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-  //                ->margins(1, 1, 1, 1)
-  //                ->waitUntilNetworkIdle()
-  //                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
-  //                ->showBrowserHeaderAndFooter()
-  //                ->headerHtml('')
-  //                ->footerHtml(view('ppemovements.reports.footer')->render())
-  //                ->pdf();
-
               // Desabilita header
               $pdf = Browsershot::html($html)
                   ->format('A4')
                   ->setChromePath('/usr/bin/google-chrome')
-                  ->setNodeBinary('/usr/bin/node')
-                  ->setNpmBinary('/usr/bin/npm')
+                  ->setIncludePath('$PATH:/usr/local/bin')
+                 // ->setNodeBinary('/usr/bin/node')
+                 // ->setNpmBinary('/usr/bin/npm')
                   //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
                   ->margins(1, 1, 1, 1)
                   ->waitUntilNetworkIdle()
@@ -215,8 +202,6 @@
                   ->setOption('headerTemplate', '<span></span>') // header vazio
                   ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
                   ->pdf();
-
-
 
 
            if ($request->date) {
