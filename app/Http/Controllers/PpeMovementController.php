@@ -187,8 +187,26 @@
                 'menuOpen' => 'menuOpenEpi',
                 'totais' => $totais,
             ])
-                ->format('a4')
-                ->name('relatorio.pdf');
+               ->format('A4')
+               ->name('relatorio.pdf')
+               ->withBrowsershot(function (Browsershot $browsershot) {
+                   $browsershot
+                       ->setChromePath('/usr/bin/google-chrome')
+                       ->setNodeBinary('/usr/bin/node')
+                       ->setNpmBinary('/usr/bin/npm')
+                       ->setOption('args', [
+                           '--no-sandbox',
+                           '--disable-setuid-sandbox',
+                           '--disable-dev-shm-usage',
+                           '--disable-crash-reporter',
+                           '--disable-extensions',
+                           '--disable-gpu',
+                           '--single-process',
+                       ])
+                       ->setOption('displayHeaderFooter', true)
+                       ->setOption('headerTemplate', '<span></span>') // header vazio
+                       ->setOption('footerTemplate', view('ppemovements.reports.footer')->render());
+               });
 
 
 
