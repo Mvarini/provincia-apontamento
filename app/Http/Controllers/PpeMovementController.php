@@ -216,6 +216,5 @@
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
             }
-
         }
     }
