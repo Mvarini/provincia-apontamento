@@ -228,8 +228,6 @@
                 ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
                 ->pdf();
 
-
-
             if ($request->date) {
                 return response($pdf)
                     ->header('Content-Type', 'application/pdf')

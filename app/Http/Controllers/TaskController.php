@@ -235,7 +235,6 @@
                 ->footerHtml(view('tasks.reports.footer')->render())
                 ->pdf();
 
-
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'attachment; filename="relatorio_apontamento_' . $request->date . '.pdf"');
