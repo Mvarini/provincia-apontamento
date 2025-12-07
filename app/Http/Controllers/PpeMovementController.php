@@ -186,22 +186,40 @@
                   'totais' => $totais,
               ]);
 
-              // Desabilita header
-              $pdf = Browsershot::html($html)
-                  ->format('A4')
-                  ->setChromePath('/usr/bin/google-chrome')
-                  ->setIncludePath('$PATH:/usr/local/bin')
-                  //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-                  ->margins(1, 1, 1, 1)
-                  ->waitUntilNetworkIdle()
-                  ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
-                  ->setOption('displayHeaderFooter', true) // habilita header/footer
-                  ->setOption('headerTemplate', '<span></span>') // header vazio
-                  ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
-                  ->pdf();
+              // Desabilita header - usado local
+//              $pdf = Browsershot::html($html)
+//                  ->format('A4')
+//                  //->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+//                  ->margins(1, 1, 1, 1)
+//                  ->waitUntilNetworkIdle()
+//                  ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+//                  ->setOption('displayHeaderFooter', true) // habilita header/footer
+//                  ->setOption('headerTemplate', '<span></span>') // header vazio
+//                  ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
+//                  ->pdf();
+
+            // Desabilita header - Usado no servidor
+            $pdf = Browsershot::html($html)
+                ->format('A4')
+//                ->setChromePath('/usr/bin/google-chrome')
+                ->setIncludePath('$PATH:/usr/local/bin')
+                ->margins(1, 1, 1, 1)
+                ->waitUntilNetworkIdle()
+                ->setOption('args', [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--user-data-dir=/tmp/chromium-data', // <<< ADICIONE AQUI
+                ])
+                ->setOption('displayHeaderFooter', true) // habilita header/footer
+                ->setOption('headerTemplate', '<span></span>') // header vazio
+                ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
+                ->pdf();
 
 
-           if ($request->date) {
+
+            if ($request->date) {
                 return response($pdf)
                     ->header('Content-Type', 'application/pdf')
                     ->header('Content-Disposition', 'attachment; filename="movimentação_epi_' . $request->date . '.pdf"');
