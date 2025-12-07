@@ -87,7 +87,6 @@
                 $validated['script_time'] = $scriptTime == '' ? null : $scriptTime;
                 $validated['real_time'] = $realTime == '' ? null : $realTime;
 
-
                 $task = Task::create($validated);
 
                 Log::info('Apontamento cadastrado', ['id' => $task->id, 'action_id_user' => Auth::id()]);
