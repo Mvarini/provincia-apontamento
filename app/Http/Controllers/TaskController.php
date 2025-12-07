@@ -187,26 +187,6 @@
 
         public function reportTask(Request $request)
         {
-//            // Se nenhum parâmetro foi enviado
-//            if (!$request->filled('batch_number') && !$request->filled('date')) {
-//                return back()->with('error', 'Você precisa informar pelo menos um filtro para gerar o relatório.');
-//            }
-//
-//            $tasks = Task::when($request->filled('batch_number'), function ($query) use ($request) {
-//                $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
-//            })
-//                ->when($request->filled('date'), function ($query) use ($request) {
-//                    $query->where('date', '=', Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
-//                })
-//                ->orderBy('date', 'desc')
-//                ->get();
-//
-//            $tasks->load('machine', 'employee', 'product', 'taskBreakdowns');
-//
-//            if ($tasks->isEmpty()) {
-//                return back()->with('error', 'Nenhum registro encontrado para os filtros informados.');
-//            }
-
             $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
                 $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
             })
@@ -237,7 +217,7 @@
 
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="relatorio_apontamento_' . $request->date . '.pdf"');
+                ->header('Content-Disposition', 'inline; filename="relatorio_apontamento_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
         }
