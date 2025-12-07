@@ -186,17 +186,27 @@
                   'totais' => $totais,
               ])->render();
 
+            $pdf = Browsershot::html($html)
+                ->format('A4')
+                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+                ->margins(1, 1, 1, 1)
+                ->waitUntilNetworkIdle()
+                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+                ->showBrowserHeaderAndFooter()
+                ->footerHtml(view('tasks.reports.footer')->render())
+                ->pdf();
+
 //               Desabilita header - usado local
-              $pdf = Browsershot::html($html)
-                  ->format('A4')
-                  ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-                  ->margins(1, 1, 1, 1)
-                  ->waitUntilNetworkIdle()
-                  ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
-                  ->setOption('displayHeaderFooter', true) // habilita header/footer
-                  ->setOption('headerTemplate', '<span></span>') // header vazio
-                  ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
-                  ->pdf();
+//              $pdf = Browsershot::html($html)
+//                  ->format('A4')
+//                  ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+//                  ->margins(1, 1, 1, 1)
+//                  ->waitUntilNetworkIdle()
+//                  ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+//                  ->setOption('displayHeaderFooter', true) // habilita header/footer
+//                  ->setOption('headerTemplate', '<span></span>') // header vazio
+//                  ->setOption('footerTemplate', view('ppemovements.reports.footer')->render())
+//                  ->pdf();
 
             // Desabilita header - Usado no servidor
 //            $pdf = Browsershot::html($html)
