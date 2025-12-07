@@ -27,6 +27,7 @@
             $admin->givePermissionTo([
                 'home.index',
                 'profile.create',
+                'profile.update',
                 'product.index',
                 'product.create',
                 'product.edit',

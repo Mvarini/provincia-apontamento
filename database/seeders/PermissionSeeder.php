@@ -19,6 +19,7 @@
                 ['title' => 'Editar usuário', 'name' => 'user.edit'],
                 ['title' => 'Deletar usuário', 'name' => 'user.destroy'],
                 ['title' => 'Cadastrar perfil', 'name' => 'profile.create'],
+                ['title' => 'Atualizar perfil', 'name' => 'profile.update'],
                 ['title' => 'Listar produtos', 'name' => 'product.index'],
                 ['title' => 'Cadastrar produto', 'name' => 'product.create'],
                 ['title' => 'Editar produto', 'name' => 'product.edit'],
