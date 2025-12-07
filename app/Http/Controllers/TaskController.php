@@ -209,12 +209,28 @@
             ])->render();
 
 
+//            $pdf = Browsershot::html($html)
+//                ->format('A4')
+//                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+//                ->margins(1, 1, 1, 1)
+//                ->waitUntilNetworkIdle()
+//                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+//                ->showBrowserHeaderAndFooter()
+//                ->footerHtml(view('tasks.reports.footer')->render())
+//                ->pdf();
+
             $pdf = Browsershot::html($html)
                 ->format('A4')
-                ->setChromePath('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-                ->margins(1, 1, 1, 1)
+                ->setIncludePath('$PATH:/usr/local/bin')
+                ->margins(1,1,1,1)
                 ->waitUntilNetworkIdle()
-                ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox'])
+                ->setOption('args', [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--user-data-dir=/tmp/browsershot-data',
+                ])
                 ->showBrowserHeaderAndFooter()
                 ->footerHtml(view('tasks.reports.footer')->render())
                 ->pdf();
@@ -222,7 +238,7 @@
 
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'inline; filename="relatorio_apontamento_' . $request->date . '.pdf"');
+                ->header('Content-Disposition', 'attachment; filename="relatorio_apontamento_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
         }
