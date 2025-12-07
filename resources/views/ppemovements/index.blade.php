@@ -44,7 +44,7 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('ppes/movements/report?' . request()->getQueryString()) }}"
-                                           class="dropdown-item">Download relatório</a>
+                                         target="_blank"  class="dropdown-item">Download relatório</a>
                                     </li>
                                 @endcan
                             </ul>

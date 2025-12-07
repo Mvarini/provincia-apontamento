@@ -12,10 +12,10 @@
             <table class="table table-hover table-sm table-sm-text">
                 <thead>
                 <tr>
-                    <th class="text-center">Data Apontamento</th>
-                    <th class="text-center">Lote Apontamento</th>
-                    <th class="text-center">Parada</th>
-                    <th class="text-center">Duração</th>
+                    <th>Data</th>
+                    <th>Lote</th>
+                    <th>Parada</th>
+                    <th>Duração</th>
                     <th class="text-end">
                         @if(auth()->user()->can('task-breakdown.edit') || auth()->user()->can('task-breakdown.destroy'))
                             Ações
@@ -26,10 +26,10 @@
                 <tbody>
                 @forelse($taskBreakdowns as $taskBreakdown)
                     <tr>
-                        <td class="text-center align-middle">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $taskBreakdown->task->date)->format('d/m/Y') }}</td>
-                        <td class="text-center align-middle">{{ $taskBreakdown->task->batch_number}}</td>
-                        <td class="text-center align-middle">{{ $taskBreakdown->machineBreakdown->name }}</td>
-                        <td class="text-center align-middle">{{ $taskBreakdown->duration }} min</td>
+                        <td class="align-middle">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $taskBreakdown->task->date)->format('d/m/Y') }}</td>
+                        <td class="align-middle">{{ $taskBreakdown->task->batch_number}}</td>
+                        <td class="align-middle">{{ $taskBreakdown->machineBreakdown->name }}</td>
+                        <td class="align-middle">{{ $taskBreakdown->duration }} min</td>
                         <td class="text-end align-middle">
                             @if(auth()->user()->can('task-breakdown.edit') || auth()->user()->can('task-breakdown.destroy'))
                                 <div class="dropdown">

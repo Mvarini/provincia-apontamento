@@ -234,10 +234,18 @@
                 ->footerHtml(view('tasks.reports.footer')->render())
                 ->pdf();
 
-            return response($pdf)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="relatorio_apontamento_' . $request->date . '.pdf"');
+            if ($request->date) {
+                return response($pdf)
+                    ->header('Content-Type', 'application/pdf')
+                    ->header('Content-Disposition', 'attachment; filename="apontamento_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
+            }else {
+                return response($pdf)
+                    ->header('Content-Type', 'application/pdf')
+                    ->header('Content-Disposition', 'attachment; filename="apontamento' . '.pdf"');
+//            inline: visualiza o pdf
+//            attachment: fazer o download direto
+            }
         }
     }

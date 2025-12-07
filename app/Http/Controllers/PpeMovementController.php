@@ -230,13 +230,13 @@
             if ($request->date) {
                 return response($pdf)
                     ->header('Content-Type', 'application/pdf')
-                    ->header('Content-Disposition', 'attachment; filename="movimentação_epi_' . $request->date . '.pdf"');
+                    ->header('Content-Disposition', 'inline; filename="movimentação_epi_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
             }else{
                 return response($pdf)
                     ->header('Content-Type', 'application/pdf')
-                    ->header('Content-Disposition', 'attachment; filename="movimentação_epi'. '.pdf"');
+                    ->header('Content-Disposition', 'inline; filename="movimentação_epi'. '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
             }
