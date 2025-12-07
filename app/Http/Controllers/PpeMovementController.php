@@ -201,7 +201,7 @@
             // Desabilita header - Usado no servidor
             $pdf = Browsershot::html($html)
                 ->format('A4')
-//                ->setChromePath('/usr/bin/google-chrome')
+               ->setChromePath('/usr/bin/chromium-browser')
                 ->setIncludePath('$PATH:/usr/local/bin')
                 ->margins(1, 1, 1, 1)
                 ->waitUntilNetworkIdle()
