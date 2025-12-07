@@ -32,7 +32,7 @@
                             type="text"
                             name="birthday"
                             id="birthday"
-                            value="{{ old('birthday', $user->profile?->birthday ? \Illuminate\Support\Carbon::parse($user->profile?->birthday)->format('d/m/Y') : \Illuminate\Support\Carbon::parse($user->profile?->birthday)->format('d/m/Y') )}}"
+                            value="{{ old('birthday', $user->profile?->birthday ? \Illuminate\Support\Carbon::parse($user->profile?->birthday)->format('d/m/Y') : "" )}}"
                             class="form-control datepicker @error('birthday') is-invalid @enderror"
                             placeholder="Nascimento"
                         />
