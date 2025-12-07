@@ -196,7 +196,6 @@
             //  ->footerHtml(view('tasks.reports.footer')->render())
             //  ->pdf();
 
-
             // Desabilita header - usado local
             // $pdf = Browsershot::html($html)
             //   ->format('A4')
