@@ -93,10 +93,11 @@
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Peças para descarte:</span>
                                     <span>{{ $task->discard_quantity }}
-                                        @if( $task->discard_quantity == 1)
+                                        @if( $task->discard_quantity > 1)
+                                            peças
+                                        @elseif($task->discard_quantity == 1)
                                             peça
                                         @else
-                                            peças
                                         @endif
                                     </span>
                                 </div>
@@ -115,12 +116,20 @@
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Tempo de roteiro:</span>
-                                    <span>{{ $task->script_time }} segundos</span>
+                                    @if($task->script_time)
+                                        <span>{{ $task->script_time }} segundos</span>
+                                    @else
+                                        <span>{{ $task->script_time }}</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Tempo real:</span>
-                                    <span>{{ $task->real_time }} segundos</span>
+                                    @if($task->real_time)
+                                        <span>{{ $task->real_time }} segundos</span>
+                                    @else
+                                        <span>{{ $task->real_time }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

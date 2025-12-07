@@ -18,7 +18,7 @@
                 [
                     'name' => 'Marciel Alessandro Varini',
                     'email' => 'marciel_mav@hotmail.com',
-                    'password' => Hash::make('123456789', ['rounds' => 12]),
+                    'password' => Hash::make('@Varini#!', ['rounds' => 12]),
                 ]
             );
             // Atribuir o papel ao usuário criado
@@ -36,14 +36,14 @@
             $admin->assignRole('Admin');
 
             $invited = User::firstOrCreate(
-                ['email' => 'kaua@email.com'],
+                ['email' => 'ph_xavier91@icloud.com'],
                 [
-                    'name' => 'kauã da Silva',
-                    'email' => 'kaua@email.com',
+                    'name' => 'Paulo Xavier',
+                    'email' => 'ph_xavier91@icloud.com',
                     'password' => Hash::make('123456789', ['rounds' => 12]),
                 ]
             );
             // Atribuir o papel
-            $invited->assignRole('Convidado');
+            $invited->assignRole('Admin');
         }
     }

@@ -81,20 +81,14 @@
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                 <ul class="dropdown-menu">
-                                    @can('')
-                                        <li><a class="dropdown-item" data-bs-toggle="modal"
-                                               data-bs-target="#formShow{{ $ppeMovement->id }}"
-                                               href="#">Visualizar</a>
-                                        </li>
-                                    @endcan
-                                    @can('')
+                                    @can('ppe-movements.edit')
                                         <li>
                                             <a class="dropdown-item"
                                                href="{{ route('ppe-movements.edit', ['ppeMovement' => $ppeMovement->id]) }}">Editar</a>
                                         </li>
                                     @endcan
 
-                                    @can('')
+                                    @can('ppe-movements.destroy')
                                         <li>
                                             <form id="formDelete{{ $ppeMovement->id }}"
                                                   action="{{ route('ppe-movements.destroy', ['ppeMovement' => $ppeMovement->id]) }}"

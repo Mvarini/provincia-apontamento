@@ -137,8 +137,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="script_time" class="form-label">Tempo de roteiro <span
-                            class="text-danger">*</span></label>
+                    <label for="script_time" class="form-label">Tempo de roteiro</label>
                     <input type="text"
                            name="script_time"
                            class="form-control second @error('script_time') is-invalid @enderror"
@@ -153,8 +152,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="real_time" class="form-label">Tempo real <span
-                            class="text-danger">*</span></label>
+                    <label for="real_time" class="form-label">Tempo real</label>
                     <input type="text"
                            name="real_time"
                            class="form-control second @error('real_time') is-invalid @enderror"
@@ -169,8 +167,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="discard_quantity" class="form-label">Descarte <span
-                            class="text-danger">*</span></label>
+                    <label for="discard_quantity" class="form-label">Descarte</label>
                     <input type="text"
                            name="discard_quantity"
                            class="form-control @error('discard_quantity') is-invalid @enderror"

@@ -62,6 +62,8 @@
          */
         public function store(TaskRequest $request)
         {
+
+
             $validated = $request->validated();
 
             DB::beginTransaction();
@@ -70,6 +72,8 @@
                 // Calcula os campos
                 $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
                 $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
+
+
                 $scriptTime = str_replace(',', '.', $validated['script_time']);
                 $realTime = str_replace(',', '.', $validated['real_time']);
 
@@ -80,8 +84,9 @@
                 $validated['expected_quantity'] = $expectedQuantity;
                 $validated['productivity'] = $productivity;
                 $validated['date'] = $data;
-                $validated['script_time'] = $scriptTime;
-                $validated['real_time'] = $realTime;
+                $validated['script_time'] = $scriptTime == '' ? null : $scriptTime;
+                $validated['real_time'] = $realTime == '' ? null : $realTime;
+
 
                 $task = Task::create($validated);
 

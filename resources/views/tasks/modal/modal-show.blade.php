@@ -38,7 +38,7 @@
                             <dd class="col-md-9 number">{{ $task->expected_quantity }}</dd>
 
                             <dt class="col-md-3">% Produtividade:</dt>
-                            <dd class="col-md-9 money">{{ $task->productivity}} </dd>
+                            <dd class="col-md-9 money">{{ $task->productivity }} </dd>
 
                             <dt class="col-md-3">Descarte:</dt>
                             <dd class="col-md-9 number">{{ $task->discard_quantity }} </dd>

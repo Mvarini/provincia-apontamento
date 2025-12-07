@@ -21,11 +21,11 @@
                 $table->integer('amount_carried'); // Quantidade realizada
                 $table->integer('expected_quantity'); // Quantidade prevista
                 $table->decimal('productivity', 10, 2); // Produtividade %
-                $table->integer('discard_quantity'); // Quantidade descartada
+                $table->integer('discard_quantity')->nullable(); // Quantidade descartada
                 $table->string('batch_number'); // Número do lote
                 $table->integer('missing_quantity'); // Quantidade em falta
-                $table->decimal('script_time', 10, 2); // Tempo de roteiro
-                $table->decimal('real_time', 10, 2); // Tempo real
+                $table->decimal('script_time', 10, 2)->nullable(); // Tempo de roteiro
+                $table->decimal('real_time', 10, 2)->nullable(); // Tempo real
                 $table->timestamps();
             });
         }

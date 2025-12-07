@@ -29,11 +29,11 @@
                 'production_minute' => 'required|numeric|max_digits:15|min:1',
                 'piece_second' => 'required|numeric|max_digits:15|min:1',
                 'amount_carried' => 'required|numeric|max_digits:15',
-                'discard_quantity' => 'required|numeric|max_digits:15',
+                'discard_quantity' => 'nullable|numeric|max_digits:15',
                 'batch_number' => 'required|max_digits:15',
                 'missing_quantity' => 'required|numeric|max_digits:15',
-                'script_time' => 'required|max:15',
-                'real_time' => 'required|max:15',
+                'script_time' => 'nullable|max:15',
+                'real_time' => 'nullable|max:15',
             ];
         }
 
@@ -65,7 +65,6 @@
                     'max_digits' => 'excedeu o limite de :max caracteres',
                 ],
                 'discard_quantity' => [
-                    'required' => 'Campo obrigatório',
                     'numeric' => 'Somente números',
                     'max_digits' => 'excedeu o limite de :max caracteres',
                 ],
@@ -79,11 +78,9 @@
                     'max_digits' => 'excedeu o limite de :max caracteres',
                 ],
                 'script_time' => [
-                    'required' => 'Campo obrigatório',
                     'max' => 'excedeu o limite de :max caracteres',
                 ],
                 'real_time' => [
-                    'required' => 'Campo obrigatório',
                     'max' => 'excedeu o limite de :max caracteres',
                 ],
             ];
