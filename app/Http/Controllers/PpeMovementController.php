@@ -184,7 +184,7 @@
                   'ppeMovements' => $ppeMovements,
                   'menuOpen' => 'menuOpenEpi',
                   'totais' => $totais,
-              ]);
+              ])->render();
 
 //               Desabilita header - usado local
               $pdf = Browsershot::html($html)
