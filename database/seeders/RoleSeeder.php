@@ -62,7 +62,12 @@
                 'ppe.destroy',
                 'role.index',
                 'role-permission.index',
-                'user.index'
+                'user.index',
+                'ppe-movements.index',
+                'ppe-movements.create',
+                'ppe-movements.edit',
+                'ppe-movements.destroy',
+                'ppe-movements.report',
             ]);
 
             // Convidado apenas visualiza as rotas

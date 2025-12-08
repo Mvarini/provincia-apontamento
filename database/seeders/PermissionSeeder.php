@@ -58,6 +58,11 @@
                 ['title' => 'Cadastrar EPI', 'name' => 'ppe.create'],
                 ['title' => 'Editar EPI', 'name' => 'ppe.edit'],
                 ['title' => 'Deletar EPI', 'name' => 'ppe.destroy'],
+                ['title' => 'Listar movimentaçāo EPI', 'name' => 'ppe-movements.index'],
+                ['title' => 'Cadastrar movimentaçāo EPI', 'name' => 'ppe-movements.create'],
+                ['title' => 'Editar movimentaçāo EPI', 'name' => 'ppe-movements.edit'],
+                ['title' => 'Deletar movimentaçāo EPI', 'name' => 'ppe-movements.destroy'],
+                ['title' => 'Relatório movimentaçāo EPI', 'name' => 'ppe-movements.report'],
             ];
 
             foreach ($permissions as $permission) {
