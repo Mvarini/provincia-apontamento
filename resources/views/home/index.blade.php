@@ -101,6 +101,8 @@
         {{--            <!--end::Small Box Widget 4-->--}}
         {{--        </div>--}}
 
+        <x-alert/>
+
         <div class="container mt-4">
             <div class="row g-3 justify-content-center">
                 <div class="col-6 col-md-3">
@@ -119,13 +121,13 @@
                     </a>
                 </div>
 
-                <div class="col-6 col-md-3">
-                    <a href="{{ route('machinebreakdown.index') }}"
-                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
-                        <i class="bi bi-exclamation-triangle-fill fs-3 mb-2"></i>
-                        <span>Paradas</span>
-                    </a>
-                </div>
+{{--                <div class="col-6 col-md-3">--}}
+{{--                    <a href="{{ route('machinebreakdown.index') }}"--}}
+{{--                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">--}}
+{{--                        <i class="bi bi-exclamation-triangle-fill fs-3 mb-2"></i>--}}
+{{--                        <span>Paradas</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
 
                 <div class="col-6 col-md-3">
                     <a href="{{ route('employee.index') }}"
@@ -140,6 +142,14 @@
                        class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
                         <i class="bi bi-clipboard-fill fs-3 mb-2"></i>
                         <span>Apontamentos</span>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <a href="{{ route('ppe-movements.index') }}"
+                       class="btn btn-secondary w-100 py-3 d-flex flex-column align-items-center">
+                        <i class="bi bi-folder-fill fs-3 mb-2"></i>
+                        <span>Movimentação EPI</span>
                     </a>
                 </div>
 

@@ -44,6 +44,6 @@
                 'image' => $request->hasFile('image') ? $requestImage : $user->profile?->image,
             ]);
 
-            return redirect()->route('user.index')->with('success', 'Perfil atualizado com sucesso!');
+            return redirect()->route('home.index')->with('success', 'Perfil atualizado com sucesso!');
         }
     }

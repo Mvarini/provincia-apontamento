@@ -108,11 +108,11 @@
                     </tr>
                 @empty
                     <tr>
-                        <colspan class="7">
+                        <td colspan="7">
                             <div class="alert alert-info mb-0" role="alert">
                                 Nenhuma movimentação de EPI cadastrada!
                             </div>
-                        </colspan>
+                        </td>
                     </tr>
                 @endforelse
                 </tbody>
