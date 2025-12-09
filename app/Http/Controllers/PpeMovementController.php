@@ -10,6 +10,7 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
+    use Illuminate\Support\Facades\Validator;
     use Spatie\Browsershot\Browsershot;
 
     class PpeMovementController extends Controller
@@ -162,6 +163,12 @@
 
         public function reportPpe(Request $request)
         {
+            //VERIFICAÇÃO COM filled() E REDIRECIONAMENTO MANUAL
+            if (!$request->filled('date')) {
+                // Se a data não estiver preenchida, armazena a mensagem de erro na sessão
+                // e redireciona de volta para o formulário.
+                return redirect()->route('ppe-movements.index')->with('error', 'Informe uma data para visualizar o relatório');
+            }
 
             $ppeMovements = PpeMovement::when($request->filled('date'), function ($query) use ($request) {
                 $query->where('date', '=', Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));

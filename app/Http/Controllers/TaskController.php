@@ -191,6 +191,13 @@
 
         public function reportTask(Request $request)
         {
+            //VERIFICAÇÃO COM filled() E REDIRECIONAMENTO MANUAL
+            if (!$request->filled('date') && !$request->filled('batch_number')) {
+                // Se a data não estiver preenchida, armazena a mensagem de erro na sessão
+                // e redireciona de volta para o formulário.
+                return redirect()->route('task.index')->with('error', 'Informe o lote ou a  data para gerar o relatório');
+            }
+
             $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
                 $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
             })

@@ -16,11 +16,16 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
                             <input type="text"
-                                   class="form-control datepicker"
+                                   class="form-control datepicker  @error('date') is-invalid @enderror"
                                    name="date"
                                    value="{{ $date }}"
                                    placeholder="Data da movimentação"
                             />
+                            @error('date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
 
@@ -44,7 +49,7 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('ppes/movements/report?' . request()->getQueryString()) }}"
-                                         target="_blank"  class="dropdown-item">Visualizar relatório</a>
+                                         class="dropdown-item">Visualizar relatório</a>
                                     </li>
                                 @endcan
                             </ul>
