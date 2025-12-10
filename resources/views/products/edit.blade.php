@@ -50,7 +50,7 @@
                         <span class="text-danger">*</span> Campo obrigatório
                     </p>
                     <div class="d-flex  justify-content-end mt-3">
-                        <button type="submit" id="btnSubmit" class="btn btn-primary btn-sm">Editar</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary btn-sm">Atualizar</button>
                     </div>
                 </div>
             </form>

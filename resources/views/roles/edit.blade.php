@@ -36,7 +36,7 @@
                         <span class="text-danger">*</span> Campos obrigatórios
                     </p>
                     <div class="d-flex  justify-content-end mt-3">
-                        <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Atualizar</button>
                     </div>
                 </div>
             </form>
