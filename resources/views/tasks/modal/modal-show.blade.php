@@ -49,9 +49,6 @@
                             <dt class="col-md-3">Tempo de roteiro:</dt>
                             <dd class="col-md-9 second">{{ $task->script_time }} </dd>
 
-                            <dt class="col-md-3">Tempo real:</dt>
-                            <dd class="col-md-9 second">{{ $task->real_time }} </dd>
-
                         </dl>
                     </div>
                 </div>

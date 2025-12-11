@@ -61,56 +61,85 @@
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Tempo de produção:</span>
-                                    <span>{{ $task->production_minute }} minutos</span>
+                                    @if($task->production_minute)
+                                        <span>{{ $task->production_minute }} minutos</span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Tempo por peça:</span>
-                                    <span>{{ $task->piece_second }} segundos</span>
+                                    @if($task->piece_second)
+                                        <span>{{ $task->piece_second }} segundos</span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Quantidade realizada:</span>
-                                    <span>{{ $task->amount_carried }} peças</span>
+                                    @if($task->amount_carried)
+                                        <span>{{ $task->amount_carried }} peças</span>
+                                    @else
+                                        <span> N/A </span>
+                                    @endif
+
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Quantidade Prevista:</span>
-                                    <span>{{ $task->expected_quantity}}
-                                        @if( $task->expected_quantity == 1)
-                                            peça
-                                        @else
-                                            peças
-                                        @endif
+                                    @if($task->expected_quantity)
+                                        <span>{{ $task->expected_quantity}}
+                                            @if( $task->expected_quantity == 1)
+                                                peça
+                                            @else
+                                                peças
+                                            @endif
                                     </span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">% produtividade:</span>
-                                    <span>{{ $task->productivity}}%</span>
+                                    @if($task->productivity)
+                                        <span>{{ $task->productivity}}%</span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Peças para descarte:</span>
-                                    <span>{{ $task->discard_quantity }}
-                                        @if( $task->discard_quantity > 1)
-                                            peças
-                                        @elseif($task->discard_quantity == 1)
-                                            peça
-                                        @else
-                                        @endif
+                                    @if($task->discard_quantity)
+                                        <span>{{ $task->discard_quantity }}
+                                            @if( $task->discard_quantity > 1)
+                                                peças
+                                            @elseif($task->discard_quantity == 1)
+                                                peça
+                                            @else
+                                            @endif
                                     </span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Finalizar o lote:</span>
-                                    <span>{{ $task->missing_quantity }}
-                                        @if( $task->missing_quantity == 1)
-                                            peça
-                                        @else
-                                            peças
-                                        @endif
+                                    @if($task->missing_quantity)
+                                        <span>{{ $task->missing_quantity }}
+                                            @if( $task->missing_quantity == 1)
+                                                peça
+                                            @else
+                                                peças
+                                            @endif
                                     </span>
+                                    @else
+                                        <span>N/A</span>
+                                    @endif
                                 </div>
 
 
@@ -119,18 +148,10 @@
                                     @if($task->script_time)
                                         <span>{{ $task->script_time }} segundos</span>
                                     @else
-                                        <span>{{ $task->script_time }}</span>
+                                        <span>N/A</span>
                                     @endif
                                 </div>
 
-                                <div class="d-flex align-items-baseline">
-                                    <span class="fw-bold label-col-dados">Tempo real:</span>
-                                    @if($task->real_time)
-                                        <span>{{ $task->real_time }} segundos</span>
-                                    @else
-                                        <span>{{ $task->real_time }}</span>
-                                    @endif
-                                </div>
                             </div>
                         </div>
                     </div>

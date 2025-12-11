@@ -1,49 +1,49 @@
 <?php
 
-    namespace Database\Seeders;
+namespace Database\Seeders;
 
-    use App\Models\User;
-    use Illuminate\Database\Seeder;
-    use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
-    class UserSeeder extends Seeder
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        /**
-         * Run the database seeds.
-         */
-        public function run(): void
-        {
-            $superAdmin = User::firstOrCreate(
-                ['email' => 'marciel_mav@hotmail.com'],
-                [
-                    'name' => 'Marciel Alessandro Varini',
-                    'email' => 'marciel_mav@hotmail.com',
-                    'password' => Hash::make('@Varini#!', ['rounds' => 12]),
-                ]
-            );
-            // Atribuir o papel ao usuário criado
-            $superAdmin->assignRole('Super Admin');
+        $superAdmin = User::firstOrCreate(
+            ['email' => 'marciel_mav@hotmail.com'],
+            [
+                'name' => 'Marciel Alessandro Varini',
+                'email' => 'marciel_mav@hotmail.com',
+                'password' => Hash::make('@Varini#!', ['rounds' => 12]),
+            ]
+        );
+        // Atribuir o papel ao usuário criado
+        $superAdmin->assignRole('Super Admin');
 
-            $admin = User::firstOrCreate(
-                ['email' => 'caio@email.com'],
-                [
-                    'name' => 'Caio da Silva',
-                    'email' => 'caio@email.com',
-                    'password' => Hash::make('123456789', ['rounds' => 12]),
-                ]
-            );
-            // Atribuir o papel
-            $admin->assignRole('Admin');
+        $admin = User::firstOrCreate(
+            ['email' => 'caioalvarenga453@gmail.com'],
+            [
+                'name' => 'Caio Alvarenga Barbosa',
+                'email' => 'caioalvarenga453@gmail.com',
+                'password' => Hash::make('123456789', ['rounds' => 12]),
+            ]
+        );
+        // Atribuir o papel
+        $admin->assignRole('Admin');
 
-            $invited = User::firstOrCreate(
-                ['email' => 'ph_xavier91@icloud.com'],
-                [
-                    'name' => 'Paulo Xavier',
-                    'email' => 'ph_xavier91@icloud.com',
-                    'password' => Hash::make('123456789', ['rounds' => 12]),
-                ]
-            );
-            // Atribuir o papel
-            $invited->assignRole('Admin');
-        }
+        $invited = User::firstOrCreate(
+            ['email' => 'ph_xavier91@icloud.com'],
+            [
+                'name' => 'Paulo Xavier',
+                'email' => 'ph_xavier91@icloud.com',
+                'password' => Hash::make('123456789', ['rounds' => 12]),
+            ]
+        );
+        // Atribuir o papel
+        $invited->assignRole('Admin');
     }
+}

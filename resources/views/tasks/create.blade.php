@@ -89,8 +89,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="production_minute" class="form-label">Tempo de Produção <span
-                            class="text-danger">*</span></label>
+                    <label for="production_minute" class="form-label">Tempo de Produção</label>
                     <input type="text"
                            name="production_minute"
                            class="form-control @error('production_minute') is-invalid @enderror"
@@ -105,8 +104,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="piece_second" class="form-label">Peças <span
-                            class="text-danger">*</span></label>
+                    <label for="piece_second" class="form-label">Peças/seg.</label>
                     <input type="text"
                            name="piece_second"
                            class="form-control @error('piece_second') is-invalid @enderror"
@@ -121,8 +119,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="amount_carried" class="form-label">Realizada <span
-                            class="text-danger">*</span></label>
+                    <label for="amount_carried" class="form-label">Realizada </label>
                     <input type="text"
                            name="amount_carried"
                            class="form-control @error('amount_carried') is-invalid @enderror"
@@ -152,21 +149,6 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="real_time" class="form-label">Tempo real</label>
-                    <input type="text"
-                           name="real_time"
-                           class="form-control second @error('real_time') is-invalid @enderror"
-                           placeholder="Segundo/peça"
-                           value="{{ old('real_time') }}"
-                    />
-                    @error('real_time')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-                <div class="col-md-2">
                     <label for="discard_quantity" class="form-label">Descarte</label>
                     <input type="text"
                            name="discard_quantity"
@@ -182,8 +164,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="missing_quantity" class="form-label">Finalizar lote <span
-                            class="text-danger">*</span></label>
+                    <label for="missing_quantity" class="form-label">Finalizar lote</label>
                     <input type="text"
                            name="missing_quantity"
                            class="form-control @error('missing_quantity') is-invalid @enderror"

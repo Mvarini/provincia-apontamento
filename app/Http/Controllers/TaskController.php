@@ -1,218 +1,247 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use App\Http\Requests\TaskRequest;
-    use App\Models\Employee;
-    use App\Models\Machine;
-    use App\Models\Product;
-    use App\Models\Task;
-    use Carbon\Carbon;
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\Support\Facades\DB;
-    use Illuminate\Support\Facades\Log;
-    use Spatie\Browsershot\Browsershot;
+use App\Http\Requests\TaskRequest;
+use App\Models\Employee;
+use App\Models\Machine;
+use App\Models\Product;
+use App\Models\Task;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Spatie\Browsershot\Browsershot;
 
-    class TaskController extends Controller
+class TaskController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
-        /**
-         * Display a listing of the resource.
-         */
-        public function index(Request $request)
-        {
 //            $tasks = Task::orderBy('date', 'desc')->paginate(10);
 
-            $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
-                $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
+        $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
+            $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
+        })
+            ->when($request->filled('date'), function ($query) use ($request) {
+                $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
             })
-                ->when($request->filled('date'), function ($query) use ($request) {
-                    $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
-                })
-                ->orderBy('date', 'desc')->paginate(10)
-                ->withQueryString();
+            ->orderBy('date', 'desc')->paginate(10)
+            ->withQueryString();
 
-            return view('tasks.index', [
-                'sidebar' => 'apontamentos',
-                'tasks' => $tasks,
-                'batch_number' => $request->batch_number,
-                'date' => $request->date
-            ]);
-        }
+        return view('tasks.index', [
+            'sidebar' => 'apontamentos',
+            'tasks' => $tasks,
+            'batch_number' => $request->batch_number,
+            'date' => $request->date
+        ]);
+    }
 
-        /**
-         * Show the form for creating a new resource.
-         */
-        public function create()
-        {
-            $machines = Machine::orderBy('name', 'asc')->get();
-            $employees = Employee::orderBy('name', 'asc')->get();
-            $products = Product::orderBy('name', 'asc')->get();
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $machines = Machine::orderBy('name', 'asc')->get();
+        $employees = Employee::orderBy('name', 'asc')->get();
+        $products = Product::orderBy('name', 'asc')->get();
 
-            return view('tasks.create', [
-                'sidebar' => 'apontamentos',
-                'machines' => $machines,
-                'employees' => $employees,
-                'products' => $products,
-            ]);
-        }
+        return view('tasks.create', [
+            'sidebar' => 'apontamentos',
+            'machines' => $machines,
+            'employees' => $employees,
+            'products' => $products,
+        ]);
+    }
 
-        /**
-         * Store a newly created resource in storage.
-         */
-        public function store(TaskRequest $request)
-        {
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TaskRequest $request)
+    {
+        $validated = $request->validated();
+
+        DB::beginTransaction();
 
 
-            $validated = $request->validated();
+        try {
 
-            DB::beginTransaction();
+            if ($validated['production_minute'] !== null) {
 
-            try {
-                // Calcula os campos
+                if ($validated['piece_second'] == 0) {
+                    return back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero!');
+                }
+
                 $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
+            } else {
+                $expectedQuantity = null;
+            }
+
+            if ($validated['amount_carried'] !== null) {
                 $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
-
-
-                $scriptTime = str_replace(',', '.', $validated['script_time']);
-                $realTime = str_replace(',', '.', $validated['real_time']);
-
-                // Campo de data
-                $data = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
-
-                // Adiciona os campos calculados ao array de dados
-                $validated['expected_quantity'] = $expectedQuantity;
-                $validated['productivity'] = $productivity;
-                $validated['date'] = $data;
-                $validated['script_time'] = $scriptTime == '' ? null : $scriptTime;
-                $validated['real_time'] = $realTime == '' ? null : $realTime;
-
-                $task = Task::create($validated);
-
-                Log::info('Apontamento cadastrado', ['id' => $task->id, 'action_id_user' => Auth::id()]);
-
-                DB::commit();
-
-                return redirect()->route('task.index')->with('success', 'Apontamento cadastrado com sucesso!');
-
-            } catch (\Exception $e) {
-                Log::error('Apontamento não cadastrado', ['error' => $e->getMessage(), 'action_id_user' => Auth::id()]);
-                DB::rollBack();
-                return back()->withInput()->with('error', 'Apontamento não cadastrado');
+            } else {
+                $productivity = null;
             }
 
+            $scriptTime = str_replace(',', '.', $validated['script_time']);
+
+
+            // Campo de data
+            $data = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
+
+            // Adiciona os campos calculados ao array de dados
+            $validated['expected_quantity'] = $expectedQuantity;
+            $validated['productivity'] = $productivity;
+            $validated['date'] = $data;
+            $validated['script_time'] = $scriptTime == '' ? null : $scriptTime;
+
+
+            $task = Task::create($validated);
+
+            Log::info('Apontamento cadastrado', ['id' => $task->id, 'action_id_user' => Auth::id()]);
+
+            DB::commit();
+
+            return redirect()->route('task.index')->with('success', 'Apontamento cadastrado com sucesso!');
+
+        } catch (\Exception $e) {
+            Log::error('Apontamento não cadastrado', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString(), 'action_id_user' => Auth::id()]);
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Apontamento não cadastrado');
         }
 
-        /**
-         * Display the specified resource.
-         */
-        public function show(Task $task)
-        {
-            //
-        }
+    }
 
-        /**
-         * Show the form for editing the specified resource.
-         */
-        public function edit(Task $task)
-        {
-            $machines = Machine::orderBy('name', 'asc')->get();
-            $employees = Employee::orderBy('name', 'asc')->get();
-            $products = Product::orderBy('name', 'asc')->get();
+    /**
+     * Display the specified resource.
+     */
+    public function show(Task $task)
+    {
+        //
+    }
 
-            return view('tasks.edit', [
-                'sidebar' => 'apontamentos',
-                'task' => $task,
-                'machines' => $machines,
-                'employees' => $employees,
-                'products' => $products,
-            ]);
-        }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Task $task)
+    {
+        $machines = Machine::orderBy('name', 'asc')->get();
+        $employees = Employee::orderBy('name', 'asc')->get();
+        $products = Product::orderBy('name', 'asc')->get();
 
-        /**
-         * Update the specified resource in storage.
-         */
-        public function update(TaskRequest $request, Task $task)
-        {
-            $validated = $request->validated();
+        return view('tasks.edit', [
+            'sidebar' => 'apontamentos',
+            'task' => $task,
+            'machines' => $machines,
+            'employees' => $employees,
+            'products' => $products,
+        ]);
+    }
 
-            if ($validated['piece_second'] == 0) {
-                return back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero!');
-            }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TaskRequest $request, Task $task)
+    {
+        $validated = $request->validated();
 
-            DB::beginTransaction();
+//        if ($request->piece_second == 0) {
+//            return redirect()->back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero ou nulo!');
+//        }
 
-            try {
-                // Calcula os campos
+        DB::beginTransaction();
+
+        try {
+
+            if ($validated['production_minute'] !== null) {
+
+                if ($validated['piece_second'] == 0) {
+                    return back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero!');
+                }
+
                 $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
+            } else {
+                $expectedQuantity = null;
+            }
+
+            if ($validated['amount_carried'] !== null) {
                 $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
-                $scriptTime = str_replace(',', '.', $validated['script_time']);
-                $realTime = str_replace(',', '.', $validated['real_time']);
-
-                // Campo de data
-                $data = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
-
-                // Adiciona os campos calculados ao array de dados
-                $validated['expected_quantity'] = $expectedQuantity;
-                $validated['productivity'] = $productivity;
-                $validated['date'] = $data;
-                $validated['script_time'] = $scriptTime;
-                $validated['real_time'] = $realTime;
-
-                $task->update($validated);
-
-                Log::info('Apontamento editado', ['id' => $task->id, 'action_id_user' => Auth::id()]);
-
-                DB::commit();
-
-                return redirect()->route('task.index')->with('success', 'Apontamento editado com sucesso!');
-            } catch (\Exception $e) {
-                Log::error('Apontamento não editado', ['error' => $e->getMessage(), 'action_id_user' => Auth::id()]);
-
-                DB::rollBack();
-
-                return back()->withInput()->with('error', 'Apontamento não pode ser atualizado!');
+            } else {
+                $productivity = null;
             }
+
+//            // Calcula os campos
+//            $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
+//            $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
+
+            $scriptTime = str_replace(',', '.', $validated['script_time']);
+
+            // Campo de data
+            $data = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
+
+            // Adiciona os campos calculados ao array de dados
+            $validated['expected_quantity'] = $expectedQuantity;
+            $validated['productivity'] = $productivity;
+            $validated['date'] = $data;
+            $validated['script_time'] = $scriptTime == '' ? null : $scriptTime;
+
+            $task->update($validated);
+
+            Log::info('Apontamento editado', ['id' => $task->id, 'action_id_user' => Auth::id()]);
+
+            DB::commit();
+
+            return redirect()->route('task.index')->with('success', 'Apontamento editado com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Apontamento não editado', ['error' => $e->getMessage(), 'action_id_user' => Auth::id()]);
+
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Apontamento não pode ser atualizado!');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Task $task)
+    {
+        try {
+            $task->delete();
+            return redirect()->route('task.index')->with('success', 'Apontamento deletado com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao deletar apontamento');
+        }
+    }
+
+
+    public function reportTask(Request $request)
+    {
+        //VERIFICAÇÃO COM filled() E REDIRECIONAMENTO MANUAL
+        if (!$request->filled('date') && !$request->filled('batch_number')) {
+            // Se a data não estiver preenchida, armazena a mensagem de erro na sessão
+            // e redireciona de volta para o formulário.
+            return redirect()->route('task.index')->with('error', 'Informe o lote ou a  data para gerar o relatório');
         }
 
-        /**
-         * Remove the specified resource from storage.
-         */
-        public function destroy(Task $task)
-        {
-            try {
-                $task->delete();
-                return redirect()->route('task.index')->with('success', 'Apontamento deletado com sucesso!');
-            } catch (\Exception $e) {
-                return back()->with('error', 'Erro ao deletar apontamento');
-            }
-        }
-
-
-        public function reportTask(Request $request)
-        {
-            //VERIFICAÇÃO COM filled() E REDIRECIONAMENTO MANUAL
-            if (!$request->filled('date') && !$request->filled('batch_number')) {
-                // Se a data não estiver preenchida, armazena a mensagem de erro na sessão
-                // e redireciona de volta para o formulário.
-                return redirect()->route('task.index')->with('error', 'Informe o lote ou a  data para gerar o relatório');
-            }
-
-            $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
-                $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
+        $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
+            $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
+        })
+            ->when($request->filled('date'), function ($query) use ($request) {
+                $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
             })
-                ->when($request->filled('date'), function ($query) use ($request) {
-                    $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
-                })
-                ->orderBy('date', 'desc')
-                ->get();
+            ->orderBy('date', 'desc')
+            ->get();
 
-            $tasks->load('machine', 'employee', 'product', 'taskBreakdowns');
+        $tasks->load('machine', 'employee', 'product', 'taskBreakdowns');
 
-            $html = view('tasks.reports.report', [
-                'tasks' => $tasks,
-                'sidebar' => 'apontamentos',
-            ])->render();
+        $html = view('tasks.reports.report', [
+            'tasks' => $tasks,
+            'sidebar' => 'apontamentos',
+        ])->render();
 
 
 //            $pdf = Browsershot::html($html)
@@ -225,34 +254,34 @@
 //                ->footerHtml(view('tasks.reports.footer')->render())
 //                ->pdf();
 
-            $pdf = Browsershot::html($html)
-                ->format('A4')
-                ->setIncludePath('$PATH:/usr/local/bin')
-                ->margins(1,1,1,1)
-                ->waitUntilNetworkIdle()
-                ->setOption('args', [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-gpu',
-                    '--user-data-dir=/tmp/browsershot-data',
-                ])
-                ->showBrowserHeaderAndFooter()
-                ->footerHtml(view('tasks.reports.footer')->render())
-                ->pdf();
+        $pdf = Browsershot::html($html)
+            ->format('A4')
+            ->setIncludePath('$PATH:/usr/local/bin')
+            ->margins(1, 1, 1, 1)
+            ->waitUntilNetworkIdle()
+            ->setOption('args', [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--user-data-dir=/tmp/browsershot-data',
+            ])
+            ->showBrowserHeaderAndFooter()
+            ->footerHtml(view('tasks.reports.footer')->render())
+            ->pdf();
 
-            if ($request->date) {
-                return response($pdf)
-                    ->header('Content-Type', 'application/pdf')
-                    ->header('Content-Disposition', 'attachment; filename="apontamento_' . $request->date . '.pdf"');
+        if ($request->date) {
+            return response($pdf)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="apontamento_' . $request->date . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
-            }else {
-                return response($pdf)
-                    ->header('Content-Type', 'application/pdf')
-                    ->header('Content-Disposition', 'attachment; filename="apontamento' . '.pdf"');
+        } else {
+            return response($pdf)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="apontamento' . '.pdf"');
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
-            }
         }
     }
+}
