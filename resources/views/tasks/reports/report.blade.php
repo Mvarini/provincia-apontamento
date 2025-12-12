@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 text-center mb-4">
-            <h1>Relatório de Apontamento - CNC</h1>
+            <h1>Logster - Relatório de Apontamento - CNC</h1>
         </div>
     </div>
 
@@ -141,7 +141,6 @@
                                         <span>N/A</span>
                                     @endif
                                 </div>
-
 
                                 <div class="d-flex align-items-baseline">
                                     <span class="fw-bold label-col-dados">Tempo de roteiro:</span>
