@@ -104,12 +104,12 @@
                 </div>
 
                 <div class="col-md-2">
-                    <label for="piece_second" class="form-label">Peças/seg.</label>
+                    <label for="piece_second" class="form-label">Peças</label>
                     <input type="text"
                            name="piece_second"
                            class="form-control @error('piece_second') is-invalid @enderror"
                            value="{{ old('piece_second') }}"
-                           placeholder="Unidade/seg"
+                           placeholder="Segundo/peça"
                     />
                     @error('piece_second')
                     <div class="invalid-feedback">
@@ -153,7 +153,7 @@
                     <input type="text"
                            name="discard_quantity"
                            class="form-control @error('discard_quantity') is-invalid @enderror"
-                           placeholder="Qtde"
+                           placeholder="Material danificado"
                            value="{{ old('discard_quantity') }}"
                     />
                     @error('discard_quantity')

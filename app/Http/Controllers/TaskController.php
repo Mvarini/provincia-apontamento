@@ -64,23 +64,19 @@ class TaskController extends Controller
     {
         $validated = $request->validated();
 
-        DB::beginTransaction();
 
+        DB::beginTransaction();
 
         try {
 
-            if ($validated['production_minute'] !== null) {
-
-                if ($validated['piece_second'] == 0) {
-                    return back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero!');
-                }
-
+            if ($validated['production_minute'] > 0 && $validated['piece_second'] > 0) {
                 $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
             } else {
                 $expectedQuantity = null;
             }
 
-            if ($validated['amount_carried'] !== null) {
+
+            if ($validated['amount_carried'] > 0) {
                 $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
             } else {
                 $productivity = null;
@@ -148,31 +144,22 @@ class TaskController extends Controller
     {
         $validated = $request->validated();
 
-//        if ($request->piece_second == 0) {
-//            return redirect()->back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero ou nulo!');
-//        }
-
         DB::beginTransaction();
 
         try {
 
-            if ($validated['production_minute'] !== null) {
-
-                if ($validated['piece_second'] == 0) {
-                    return back()->withInput()->with('error', 'O campo Peças/segundo não pode ser zero!');
-                }
-
+            if ($validated['production_minute'] > 0 && $validated['piece_second'] > 0) {
                 $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
             } else {
                 $expectedQuantity = null;
             }
 
-            if ($validated['amount_carried'] !== null) {
+
+            if ($validated['amount_carried'] > 0) {
                 $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
             } else {
                 $productivity = null;
             }
-
 //            // Calcula os campos
 //            $expectedQuantity = $validated['production_minute'] * 60 / $validated['piece_second'];
 //            $productivity = $validated['amount_carried'] * 100 / $expectedQuantity;
@@ -227,16 +214,31 @@ class TaskController extends Controller
             return redirect()->route('task.index')->with('error', 'Informe o lote ou a  data para gerar o relatório');
         }
 
-        $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
+//        $tasks = Task::when($request->has('batch_number'), function ($query) use ($request) {
+//            $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
+//        })
+//            ->when($request->filled('date'), function ($query) use ($request) {
+//                $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
+//            })
+//            ->orderBy('date', 'desc')
+//            ->get();
+
+        $tasks = Task::select('tasks.*') // 1. Seleciona explicitamente as colunas de 'tasks'
+        ->join('machines', 'tasks.machine_id', '=', 'machines.id') // 2. Junta a tabela 'machines'
+        ->when($request->has('batch_number'), function ($query) use ($request) {
             $query->where('batch_number', 'like', '%' . $request->batch_number . '%');
         })
             ->when($request->filled('date'), function ($query) use ($request) {
-                $query->where('date', '=', carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
+                $query->where('date', '=', Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'));
             })
+            // 3. Adiciona a ordenação primária pelo nome da máquina
+            ->orderBy('machines.name', 'asc')
+            // 4. Mantém a ordenação secundária pela data da tarefa (desc)
             ->orderBy('date', 'desc')
             ->get();
 
         $tasks->load('machine', 'employee', 'product', 'taskBreakdowns');
+
 
         $html = view('tasks.reports.report', [
             'tasks' => $tasks,

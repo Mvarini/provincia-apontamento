@@ -26,15 +26,15 @@ class TaskRequest extends FormRequest
             'machine_id' => 'required',
             'product_id' => 'required',
             'date' => 'required|date_format:d/m/Y',
-            'production_minute' => 'nullable|numeric|max_digits:15',
-            'piece_second' => 'nullable|numeric|max_digits:15',
+            'production_minute' => 'nullable|numeric|max_digits:15|required_with:piece_second',
+            'piece_second' => 'nullable|numeric|max_digits:15|required_with:production_minute',
             'amount_carried' => 'nullable|numeric|max_digits:15',
-            'expected_quantity' => 'nullable|numeric',
+            'expected_quantity' => 'nullable',
             'productivity' => 'nullable|numeric',
             'discard_quantity' => 'nullable|numeric|max_digits:15',
             'batch_number' => 'required|numeric|max_digits:15',
             'missing_quantity' => 'nullable|numeric|max_digits:15',
-            'script_time' => 'nullable|numeric',
+            'script_time' => 'nullable',
         ];
     }
 
@@ -51,10 +51,12 @@ class TaskRequest extends FormRequest
             'production_minute' => [
                 'numeric' => 'Somente números',
                 'max_digits' => 'excedeu o limite de :max caracteres',
+                'required_with' => 'Este campo deve ser preenchido',
             ],
             'piece_second' => [
                 'numeric' => 'Somente números',
                 'max_digits' => 'excedeu o limite de :max caracteres',
+                'required_with' => 'Este campo deve ser preenchido',
             ],
             'amount_carried' => [
                 'numeric' => 'Somente números',
