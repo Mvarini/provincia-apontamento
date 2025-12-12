@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 text-center mb-4">
-            <h1>Logster - Relatório de Apontamento - CNC</h1>
+            <h1>Logster - Relatório de Apontamento CNC</h1>
         </div>
     </div>
 
