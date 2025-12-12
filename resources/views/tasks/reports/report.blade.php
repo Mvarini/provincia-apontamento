@@ -165,7 +165,7 @@
                                     @foreach($task->taskBreakdowns as $taskBreakdown)
                                         <div class="d-flex align-items-baseline">
                                             <span
-                                                class="label-col-paradas">{{ $taskBreakdown->machineBreakdown->name }}</span>
+                                                class="label-col-dados">{{ $taskBreakdown->machineBreakdown->name }}</span>
                                             <span>{{ $taskBreakdown->duration }} minutos</span>
                                         </div>
                                     @endforeach
