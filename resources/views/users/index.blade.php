@@ -17,7 +17,7 @@
                 <thead>
                 <tr>
                     <th class="w-50">Nome</th>
-                    <th class="d-none d-md-table-cell">E-mail</th>
+                    {{--                    <th class="d-none d-md-table-cell">E-mail</th>--}}
                     <th>Papel</th>
                     <th class="w-10 text-end">
                         @if(auth()->user()->can('user.edit') || auth()->user()->can('user.destroy'))
@@ -30,7 +30,7 @@
                 @forelse($users as $user)
                     <tr>
                         <td class="align-middle w-50">{{ $user->name }}</td>
-                        <td class="d-none d-md-table-cell align-middle">{{ $user->email }}</td>
+                        {{--                        <td class="d-none d-md-table-cell align-middle">{{ $user->email }}</td>--}}
                         <td class="align-middle">
                             @foreach($user->getRoleNames() as $role)
                                 {{ $role }}
