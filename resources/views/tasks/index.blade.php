@@ -88,13 +88,14 @@
                         <td class="align-middle">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $task->date)->format('d/m/Y') }}</td>
                         <td class="text-center align-middle">{{ $task->batch_number }}</td>
                         <td class="text-center align-middle">{{ $task->machine->name }} </td>
-                        <td class="text-center align-middle d-none d-md-table-cell">{{ $task->product?->name }}</td>
-                        <td class="text-center d-none d-md-table-cell align-middle">{{ $task->piece_second }}</td>
-                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->amount_carried }}</td>
-                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity }}</td>
+                        <td class="text-center align-middle d-none d-md-table-cell">{{ $task->product?->name }}
+                        </td>
+                        <td class="text-center d-none d-md-table-cell align-middle">{{ $task->piece_second ?? '-' }} </td>
+                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->amount_carried ?? '-' }}</td>
+                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity ?? '-' }}</td>
                         <td class="text-center d-none d-md-table-cell align-middle">
                             @if($task->productivity)
-                                {{ $task->productivity }}%
+                                {{ $task->productivity ?? '-' }}%
                             @endif
                         </td>
                         <td class="text-center align-middle">
