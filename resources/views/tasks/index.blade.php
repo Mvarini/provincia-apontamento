@@ -91,13 +91,32 @@
                         <td class="text-center align-middle d-none d-md-table-cell">{{ $task->product?->name }}
                         </td>
                         <td class="text-center d-none d-md-table-cell align-middle">{{ $task->piece_second ?? '-' }} </td>
-                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->amount_carried ?? '-' }}</td>
-                        <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity ?? '-' }}</td>
-                        <td class="text-center d-none d-md-table-cell align-middle">
-                            @if($task->productivity)
-                                {{ $task->productivity ?? '-' }}%
-                            @endif
-                        </td>
+
+                        @if($task->amount_carried)
+                            <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->amount_carried }} </td>
+                        @else
+                            <td class="text-center d-none d-md-table-cell align-middle">{{ $task->amount_carried ?? '-'}} </td>
+                        @endif
+
+                        @if($task->expected_quantity)
+                            <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity }} </td>
+                        @else
+                            <td class="text-center d-none d-md-table-cell align-middle">{{ $task->expected_quantity ?? '-' }} </td>
+                        @endif
+
+                        @if($task->expected_quantity)
+                            <td class="text-center d-none d-md-table-cell align-middle number">{{ $task->expected_quantity }} </td>
+                        @else
+                            <td class="text-center d-none d-md-table-cell align-middle">{{ $task->expected_quantity ?? '-' }} </td>
+                        @endif
+
+                        @if($task->productivity)
+                            <td class="text-center d-none d-md-table-cell align-middle">{{ $task->productivity }}%</td>
+                        @else
+                            <td class="text-center d-none d-md-table-cell align-middle">{{ $task->productivity ?? '-' }}</td>
+                        @endif
+                        
+
                         <td class="text-center align-middle">
                             @if(auth()->user()->can('task.show') || auth()->user()->can('task.edit') || auth()->user()->can('task.destroy') || auth()->user()->can('task-breakdown.index'))
                                 <div class="dropdown">
