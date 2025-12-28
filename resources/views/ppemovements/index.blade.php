@@ -1,6 +1,6 @@
 @extends('layouts.master.default')
 @section('page-actions')
-    <a href="{{ route('ppe-movements.create') }}" class="btn btn-primary btn-sm">Adiconar</a>
+    <a href="{{ route('ppe-movements.create') }}" class="btn btn-primary btn-sm">Adicionar</a>
 @endsection
 @section('page-title','Movimentação de EPI')
 @section('content')
