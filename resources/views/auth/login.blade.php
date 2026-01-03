@@ -54,9 +54,9 @@
                 <div class="mt-3 text-center">
                     <small>
                         <p class="mb-1">
-                            {{--<a href="{{ route('password.request') }}"
+                            <a href="{{ route('password.request') }}"
                                class="text-decoration-none">Esqueceu sua senha?
-                            </a>--}}
+                            </a>
                         </p>
                     </small>
                     <small>
