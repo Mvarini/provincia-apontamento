@@ -1,48 +1,58 @@
 <?php
 
-    namespace App\Actions\Fortify;
+namespace App\Actions\Fortify;
 
-    use App\Models\User;
-    use Illuminate\Support\Facades\Hash;
-    use Illuminate\Support\Facades\Validator;
-    use Illuminate\Validation\Rule;
-    use Laravel\Fortify\Contracts\CreatesNewUsers;
-    use Spatie\Permission\Models\Role;
 
-    class CreateNewUser implements CreatesNewUsers
+use App\Jobs\SendEmailWelcomeJob;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Testing\Fakes\MailFake;
+use Illuminate\Validation\Rule;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Spatie\Permission\Models\Role;
+
+class CreateNewUser implements CreatesNewUsers
+{
+    use PasswordValidationRules;
+
+    /**
+     * Validate and create a newly registered user.
+     *
+     * @param array<string, string> $input
+     */
+    public function create(array $input): User
     {
-        use PasswordValidationRules;
+        Validator::make($input, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique(User::class),
+            ],
+            'password' => $this->passwordRules(),
+        ])->validate();
 
-        /**
-         * Validate and create a newly registered user.
-         *
-         * @param array<string, string> $input
-         */
-        public function create(array $input): User
-        {
-            Validator::make($input, [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => [
-                    'required',
-                    'string',
-                    'email',
-                    'max:255',
-                    Rule::unique(User::class),
-                ],
-                'password' => $this->passwordRules(),
-            ])->validate();
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+        ]);
 
-            $user = User::create([
-                'name' => $input['name'],
-                'email' => $input['email'],
-                'password' => Hash::make($input['password']),
-            ]);
-
-            //Verificar se o papel de Convidado existe antes de atribuir
-            if (Role::where('name', 'Convidado')->exists()) {
-                $user->assignRole('Convidado');
-            }
-
-            return $user;
+        //Verificar se o papel de Convidado existe antes de atribuir
+        if (Role::where('name', 'Convidado')->exists()) {
+            $user->assignRole('Convidado');
         }
+
+        // Despachando o email do novo usuário através do job
+        SendEmailWelcomeJob::dispatch($user);
+
+        // Adiciona o sinal para o SweetAlert2 ao se cadastrar
+        session()->flash('success', 'Bem-vindo(a), ' . $user->name . '!');
+
+        return $user;
     }
+}
