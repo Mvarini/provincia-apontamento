@@ -14,7 +14,7 @@
                 <tr>
                     <th>Nome</th>
                     <th class="text-end">
-                        @if(auth()->user()->can('role.index') || auth()->user()->can('role.destroy') || auth()->user()->can('role-permission.index'))
+                        @if(auth()->user()->can('role.edit') || auth()->user()->can('role.destroy') || auth()->user()->can('role-permission.index'))
                             Ações
                         @endif
                     </th>
@@ -26,7 +26,7 @@
                         <td class="align-middle">{{ $role->name }}</td>
                         <td class="text-end align-middle">
 
-                            @if(auth()->user()->can('role.index') || auth()->user()->can('role.destroy') || auth()->user()->can('role-permission.index'))
+                            @if(auth()->user()->can('role.edit') || auth()->user()->can('role.destroy') || auth()->user()->can('role-permission.index'))
 
                                 <div class="dropdown">
                                     <button class="btn btn-outline-dark border-0" type="button"
