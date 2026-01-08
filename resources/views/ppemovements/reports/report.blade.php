@@ -25,7 +25,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 text-center mb-4">
-            <h1>Movimentação de EPI - CNC</h1>
+            <h1>Logster - Movimentação de EPI CNC</h1>
         </div>
     </div>
 
