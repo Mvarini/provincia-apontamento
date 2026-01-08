@@ -44,8 +44,14 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a href="{{ url('ppes/movements/report?' . request()->getQueryString()) }}"
-                                           class="dropdown-item">Visualizar relatório</a>
+                                        {{--                                        <a href="{{ url('ppes/movements/report?' . request()->getQueryString()) }}"--}}
+                                        {{--                                           class="dropdown-item">Visualizar relatório</a>--}}
+
+                                        <a href="javascript:void(0)"
+                                           class="dropdown-item"
+                                           onclick="gerarRelatorio('{{ url('ppes/movements/report?' . request()->getQueryString()) }}')">
+                                            <i class="fa fa-download"></i> Download relatório
+                                        </a>
                                     </li>
                                 @endcan
                             </ul>
