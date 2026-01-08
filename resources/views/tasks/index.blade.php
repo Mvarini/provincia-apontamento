@@ -54,9 +54,18 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    {{--                                    <li>--}}
+                                    {{--                                        <a href="{{ url('tasks/report?' . request()->getQueryString()) }}"--}}
+                                    {{--                                           class="dropdown-item"--}}
+                                    {{--                                        >Download relatório--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </li>--}}
                                     <li>
-                                        <a href="{{ url('tasks/report?' . request()->getQueryString()) }}"
-                                           class="dropdown-item">Download relatório</a>
+                                        <a href="javascript:void(0)"
+                                           class="dropdown-item"
+                                           onclick="gerarRelatorio('{{ url('tasks/report?' . request()->getQueryString()) }}')">
+                                            <i class="fa fa-download"></i> Download relatório
+                                        </a>
                                     </li>
                                 @endcan
                             </ul>
@@ -115,7 +124,7 @@
                         @else
                             <td class="text-center d-none d-md-table-cell align-middle">{{ $task->productivity ?? '-' }}</td>
                         @endif
-                        
+
 
                         <td class="text-center align-middle">
                             @if(auth()->user()->can('task.show') || auth()->user()->can('task.edit') || auth()->user()->can('task.destroy') || auth()->user()->can('task-breakdown.index'))

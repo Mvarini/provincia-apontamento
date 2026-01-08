@@ -12,3 +12,4 @@ import './importsweetalert.js';
 import './importjquery.js';
 import './importflatpickr.js';
 import './importjquerymask.js';
+import './loudtaskreport.js';

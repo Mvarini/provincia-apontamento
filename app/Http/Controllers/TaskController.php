@@ -275,13 +275,17 @@ class TaskController extends Controller
         if ($request->date) {
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="apontamento_' . $request->date . '.pdf"');
+                ->header('Content-Disposition', 'attachment; filename="apontamento_' . $request->date . '.pdf"')
+                // Criamos um cookie simples (acessível via JS) que expira em 1 minuto
+                ->withCookie(cookie('download_finished', 'true', 1, '/', null, false, false));
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
         } else {
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="apontamento' . '.pdf"');
+                ->header('Content-Disposition', 'attachment; filename="apontamento' . '.pdf"')
+                // Criamos um cookie simples (acessível via JS) que expira em 1 minuto
+                ->withCookie(cookie('download_finished', 'true', 1, '/', null, false, false));
 //            inline: visualiza o pdf
 //            attachment: fazer o download direto
         }
