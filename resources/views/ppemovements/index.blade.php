@@ -49,6 +49,7 @@
 
                                         <a href="javascript:void(0)"
                                            class="dropdown-item"
+                                           target="_blank"
                                            onclick="gerarRelatorio('{{ url('ppes/movements/report?' . request()->getQueryString()) }}')">
                                             <i class="fa fa-download"></i> Download relatório
                                         </a>
