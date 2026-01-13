@@ -39,7 +39,7 @@
                                 <li>
                                     <a href="{{ route('ppe-movements.index') }}" class="dropdown-item" type="button">Limpar</a>
                                 </li>
-                                @can('task.report-task')
+                                @can('ppe-movements.report')
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
