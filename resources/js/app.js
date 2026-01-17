@@ -13,3 +13,4 @@ import './importjquery.js';
 import './importflatpickr.js';
 import './importjquerymask.js';
 import './loudtaskreport.js';
+import './select2.js';
