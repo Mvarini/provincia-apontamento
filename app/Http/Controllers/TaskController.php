@@ -264,7 +264,8 @@ class TaskController extends Controller
 
         $pdf = Browsershot::html($html)
             ->format('A4')
-            ->setIncludePath('$PATH:/usr/local/bin')
+//            ->setIncludePath('$PATH:/usr/local/bin')
+            ->setChromePath('/usr/bin/google-chrome')
             ->margins(1, 1, 1, 1)
             ->waitUntilNetworkIdle()
             ->setOption('args', [
