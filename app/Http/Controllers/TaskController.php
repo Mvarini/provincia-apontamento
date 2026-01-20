@@ -207,6 +207,12 @@ class TaskController extends Controller
 
     public function reportTask(Request $request)
     {
+        // Aumenta o tempo de execução para 5 minutos (300 segundos)
+        set_time_limit(300);
+
+        // Aumenta o limite de memória também, pois relatórios grandes exigem isso
+        ini_set('memory_limit', '512M');
+
         //VERIFICAÇÃO COM filled() E REDIRECIONAMENTO MANUAL
         if (!$request->filled('date') && !$request->filled('batch_number')) {
             // Se a data não estiver preenchida, armazena a mensagem de erro na sessão
